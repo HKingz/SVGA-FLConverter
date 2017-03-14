@@ -1,5 +1,6 @@
 
 import Exporter from './exporter'
+import Writer from './writer'
 
 var originalHandleComplete = handleComplete;
 var currentFrame = 0;
@@ -11,7 +12,8 @@ var onTick = function(event) {
     currentFrame++;
     if (currentFrame >= exportRoot.totalFrames) {
         createjs.Ticker.removeAllEventListeners();
-        exporter.combined();
+        let writer = new Writer(exporter);
+        writer.createZIPPackage();
     }
 }
 

@@ -7,6 +7,7 @@ module.exports = class Exporter {
 
     movie = null;
     frames = [];
+    resources = {};
 
     constructor() {
         this.movie = new Movie();
@@ -60,7 +61,10 @@ module.exports = class Exporter {
         let layerFrame = new LayerFrame();
         layerFrame.layerOrder = layer._order;
         if (layer.image instanceof Node) {
-            layerFrame.imageKey = stage.children[0].children[0].children[0].image.src.toString().split('/').pop()
+            layerFrame.imageKey = layer.image.src.toString().split('/').pop().replace('.png', '')
+            if (this.resources[layerFrame.imageKey] === undefined) {
+                this.resources[layerFrame.imageKey] = layer.image.src.toString().split('/').pop();
+            }
         }
         layerFrame.alpha = layer.alpha;
         layerFrame.layout.x = layer.getBounds().x;
@@ -137,6 +141,9 @@ module.exports = class Exporter {
                                 }
                             }
                             // combine now
+                            if (targetA == null || targetB == null) {
+                                continue;
+                            }
                             for (let index = 0; index < this.movie.frameCount; index++) {
                                 if (Object.keys(targetB[index]).length > 0) {
                                     targetA[index] = targetB[index];

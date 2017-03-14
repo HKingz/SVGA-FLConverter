@@ -1,1 +1,10 @@
-{"version":"0.0.80","type":"PC","assets":"","es6":"true","webp":"false","legolib":"false","alias":{},"global":{}}
+{
+    "version": "0.0.80",
+    "type": "PC",
+    "assets": "",
+    "es6": "true",
+    "webp": "false",
+    "legolib": "false",
+    "alias": {},
+    "global": {}
+}
