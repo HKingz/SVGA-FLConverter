@@ -1,5 +1,4 @@
-
-module.exports = class Movie {
+module.exports = class SVGAMovieEntity {
 
     viewBox = {
         width: 0.0,

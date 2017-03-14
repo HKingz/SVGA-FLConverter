@@ -1,18 +1,26 @@
+'use strict';
 
-import Exporter from './exporter'
-import Writer from './writer'
+/**
+ * @file  : svga-flconverter
+ * @author: cuiminghui
+ * @team  : UED中心
+ * @export: umd
+ */
+
+import SVGATimeline from './modules/SVGATimeline'
+import SVGAWriter from './modules/SVGAWriter'
 
 var originalHandleComplete = handleComplete;
 var currentFrame = 0;
-var exporter = null;
+var timeline = null;
 
 var onTick = function(event) {
     stage.handleEvent(event);
-    exporter.readFrame(currentFrame);
+    timeline.readFrame(currentFrame);
     currentFrame++;
     if (currentFrame >= exportRoot.totalFrames) {
         createjs.Ticker.removeAllEventListeners();
-        let writer = new Writer(exporter);
+        let writer = new SVGAWriter(timeline);
         writer.createZIPPackage((blob) => {
             onConverted(blob);
         });
@@ -33,9 +41,8 @@ var onConverted = function(blob) {
 handleComplete = function(event) {
     originalHandleComplete(event);
     createjs.Ticker.removeAllEventListeners();
-    exporter = new Exporter();
+    timeline = new SVGATimeline();
     createjs.Ticker.addEventListener("tick", onTick);
     document.querySelector('#canvas').style.opacity = 0.0;
     document.querySelector('.downloadButton').innerHTML = "正在转换中";
-
 }

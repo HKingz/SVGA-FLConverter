@@ -1,10 +1,8 @@
-
-
-module.exports = class LayerFrame {
+module.exports = class SVGALayerFrameEntity {
 
     layerOrder = 0;
 
-    imageKey = null;
+    imageKey = undefined;
 
     alpha = 0.0;
 
@@ -15,13 +13,17 @@ module.exports = class LayerFrame {
         d: 1.0,
         tx: 0.0,
         ty: 0.0,
-    }
+    };
 
     layout = {
         x: 0.0,
         y: 0.0,
         width: 0.0,
         height: 0.0,
-    }
+    };
+
+    clipPath = undefined;
+
+    shapes = [];
 
 }

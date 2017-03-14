@@ -1,27 +1,28 @@
-
-import Movie from './movie'
-import LayerFrame from './layerFrame'
+import SVGAMovieEntity from './SVGAMovieEntity'
+import SVGALayerFrameEntity from './SVGALayerFrameEntity'
 import Matrix from './transformation-matrix'
+import SVGAPathHelper from './SVGAPathHelper'
+import SVGAShapeHelper from './SVGAShapeHelper'
+import SVGAMaskHelper from './SVGAMaskHelper'
 
-module.exports = class Exporter {
+module.exports = class SVGATimeline {
 
-    movie = null;
-    frames = [];
-    resources = {};
+    _movie = null;
+    _frames = [];
+    _orderUsed = {};
+    _orderCurrent = 0;
+    _resources = {};
 
     constructor() {
-        this.movie = new Movie();
+        this._movie = new SVGAMovieEntity();
     }
 
     readFrame = (idx) => {
         this._orderCurrent = 0;
         this.resetOrders(stage);
         let layerFrames = this.findLayerFrames(stage);
-        this.frames.push(layerFrames);
+        this._frames.push(layerFrames);
     };
-    
-    _orderUsed = {};
-    _orderCurrent = 0;
 
     resetOrders = (layer) => {
         if (layer.children instanceof Array) {
@@ -31,7 +32,7 @@ module.exports = class Exporter {
         }
         else {
             if (this._order == null || this._order == undefined) {
-                if (this._orderUsed[this._orderCurrent] === true) {
+                while(this._orderUsed[this._orderCurrent] === true) {
                     this._orderCurrent++;
                 }
                 layer._order = this._orderCurrent;
@@ -58,19 +59,38 @@ module.exports = class Exporter {
     }
 
     parseLayerFrame = (layer) => {
-        let layerFrame = new LayerFrame();
+        let layerFrame = new SVGALayerFrameEntity();
         layerFrame.layerOrder = layer._order;
         if (layer.image instanceof Node) {
-            layerFrame.imageKey = layer.image.src.toString().split('/').pop().replace('.png', '')
-            if (this.resources[layerFrame.imageKey] === undefined) {
-                this.resources[layerFrame.imageKey] = layer.image.src.toString().split('/').pop();
+            let imageKey = layer.image.src.toString().split('/').pop().replace('.png', '').split('?')[0];
+            if (imageKey.match(/[^a-zA-Z0-9\.\-\_]/) !== null) {
+                imageKey = md5(imageKey);
             }
+            let image = {
+                imageKey: imageKey,
+                dataPath: layer.image.src.toString(),
+            }
+            layerFrame.imageKey = image.imageKey;
+            if (this._resources[image.imageKey] === undefined) {
+                this._resources[image.imageKey] = image;
+            }
+            layerFrame.layout.x = layer.getBounds().x;
+            layerFrame.layout.y = layer.getBounds().y;
+            layerFrame.layout.width = layer.getBounds().width;
+            layerFrame.layout.height = layer.getBounds().height;
+        }
+        else if (layer.graphics !== undefined && layer.graphics !== null) {
+            layerFrame.imageKey = layer.id + ".vector";
+            let shape = {
+                type: "shape",
+                args: {
+                    d: (new SVGAPathHelper(layer.graphics)).requestPath(),
+                },
+                styles: (new SVGAShapeHelper(layer.graphics)).requestStyle(),
+            }
+            layerFrame.shapes.push(shape);
         }
         layerFrame.alpha = layer.alpha;
-        layerFrame.layout.x = layer.getBounds().x;
-        layerFrame.layout.y = layer.getBounds().y;
-        layerFrame.layout.width = layer.getBounds().width;
-        layerFrame.layout.height = layer.getBounds().height;
         let matrix = new Matrix();
         matrix.translate(-layer.regX, -layer.regY).scale(layer.scaleX, layer.scaleY).rotate(-layer.rotation * Math.PI / 180);
         matrix.translate(layer.x, layer.y);
@@ -86,13 +106,14 @@ module.exports = class Exporter {
         layerFrame.transform.d = matrix.props[5];
         layerFrame.transform.tx = matrix.props[12];
         layerFrame.transform.ty = matrix.props[13];
+        layerFrame.clipPath = (new SVGAMaskHelper(layer)).requestMaskPath();
         return layerFrame;
     }
 
     combined = () => {
         let sprites = {};
-        for (let frameIdx = 0; frameIdx < this.frames.length; frameIdx++) {
-            let frameSprites = this.frames[frameIdx];
+        for (let frameIdx = 0; frameIdx < this._frames.length; frameIdx++) {
+            let frameSprites = this._frames[frameIdx];
             for (let layerIdx = 0; layerIdx < frameSprites.length; layerIdx++) {
                 let frameSprite = frameSprites[layerIdx];
                 if (sprites[frameSprite.layerOrder] === undefined) {
@@ -133,7 +154,7 @@ module.exports = class Exporter {
                     else {
                         if (targetA.imageKey === element.imageKey) {
                             targetB = element;
-                            for (let index = 0; index < this.movie.frameCount; index++) {
+                            for (let index = 0; index < this._movie.frameCount; index++) {
                                 if (Object.keys(targetA[index]).length > 0 && Object.keys(targetB[index]).length > 0) {
                                     targetA = targetB;
                                     targetB = null;
@@ -144,7 +165,7 @@ module.exports = class Exporter {
                             if (targetA == null || targetB == null) {
                                 continue;
                             }
-                            for (let index = 0; index < this.movie.frameCount; index++) {
+                            for (let index = 0; index < this._movie.frameCount; index++) {
                                 if (Object.keys(targetB[index]).length > 0) {
                                     targetA[index] = targetB[index];
                                 }
