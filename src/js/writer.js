@@ -7,12 +7,15 @@ module.exports = class Writer {
         this.exporter = exporter;
     }
 
-    createZIPPackage() {
+    createZIPPackage(callback) {
         let zip = new JSZip();
         zip.file("movie.spec", JSON.stringify(this.createSpec()));
         let createPackage = () => {
             zip.generateAsync({type: "blob", compression: "DEFLATE"}).then((blob) => {
-                saveAs(blob, document.title + ".svga");
+                callback(blob);
+                document.querySelector('.downloadButton').onclick = () => {
+                    saveAs(blob, document.title + "_" + (new Date()).toLocaleDateString() + ".svga");
+                }
             }, (err) => {
                 console.log(err);
             });
