@@ -32,8 +32,16 @@ module.exports = class SVGAWriter {
         for (let aKey in sprites) {
             if (sprites.hasOwnProperty(aKey)) {
                 let element = sprites[aKey];
+                let imageKey = () => {
+                    for (let index = 0; index < element.length; index++) {
+                        let itemElement = element[index];
+                        if (itemElement.imageKey !== undefined) {
+                            return itemElement.imageKey;
+                        }
+                    }
+                }
                 let r = {
-                    imageKey: element[0].imageKey,
+                    imageKey: imageKey(),
                     frames: element.map(function(item) {
                         return {
                             alpha: item.alpha,

@@ -1,6 +1,6 @@
 module.exports = class SVGALayerFrameEntity {
 
-    layerOrder = 0;
+    layerOrder = null;
 
     imageKey = undefined;
 

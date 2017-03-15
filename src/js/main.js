@@ -20,6 +20,7 @@ var onTick = function(event) {
     currentFrame++;
     if (currentFrame >= exportRoot.totalFrames) {
         createjs.Ticker.removeAllEventListeners();
+        timeline.resetOrders();
         let writer = new SVGAWriter(timeline);
         writer.createZIPPackage((blob) => {
             onConverted(blob);

@@ -9,8 +9,6 @@ module.exports = class SVGATimeline {
 
     _movie = null;
     _frames = [];
-    _orderUsed = {};
-    _orderCurrent = 0;
     _resources = {};
 
     constructor() {
@@ -19,25 +17,65 @@ module.exports = class SVGATimeline {
 
     readFrame = (idx) => {
         this._orderCurrent = 0;
-        this.resetOrders(stage);
         let layerFrames = this.findLayerFrames(stage);
         this._frames.push(layerFrames);
     };
 
-    resetOrders = (layer) => {
-        if (layer.children instanceof Array) {
-            for (let index = 0; index < layer.children.length; index++) {
-                this.resetOrders(layer.children[index]);
+    resetOrders = () => {
+        let orderStack = [];
+        let orderStackIdelIndex = (imageKey) => {
+            for (let index = 0; index < orderStack.length; index++) {
+                let element = orderStack[index];
+                if (element.imageKey === imageKey && element.used === false) {
+                    return index;
+                }
+            }
+            return null;
+        }
+        for (let frameIdx = 0; frameIdx < this._frames.length; frameIdx++) {
+            let spriteLayers = this._frames[frameIdx];
+            for (let index = 0; index < orderStack.length; index++) {
+                let element = orderStack[index];
+                element.used = false;
+            }
+            for (let layerIdx = 0; layerIdx < spriteLayers.length; layerIdx++) {
+                let spriteLayer = spriteLayers[layerIdx];
+                let idelIndex = orderStackIdelIndex(spriteLayer.imageKey);
+                if (idelIndex === null) {
+                    let insertIdx = null;
+                    for (let layerIdx = 0; layerIdx < spriteLayers.length; layerIdx++) {
+                        let spriteLayer = spriteLayers[layerIdx];
+                        let idelIndex = orderStackIdelIndex(spriteLayer.imageKey);
+                        if (idelIndex !== null) {
+                            insertIdx = idelIndex;
+                            break;
+                        }
+                    }
+                    if (insertIdx === null) {
+                        orderStack.push({imageKey: spriteLayer.imageKey, used: true});
+                    }
+                    else {
+                        orderStack.splice(insertIdx, 0, {imageKey: spriteLayer.imageKey, used: true});
+                    }
+                }
+                else {
+                    orderStack[idelIndex].used = true;
+                }
             }
         }
-        else {
-            if (this._order == null || this._order == undefined) {
-                while(this._orderUsed[this._orderCurrent] === true) {
-                    this._orderCurrent++;
+        for (let frameIdx = 0; frameIdx < this._frames.length; frameIdx++) {
+            let spriteLayers = this._frames[frameIdx];
+            for (let index = 0; index < orderStack.length; index++) {
+                let element = orderStack[index];
+                element.used = false;
+            }
+            for (let layerIdx = 0; layerIdx < spriteLayers.length; layerIdx++) {
+                let spriteLayer = spriteLayers[layerIdx];
+                let idelIndex = orderStackIdelIndex(spriteLayer.imageKey);
+                if (idelIndex != null) {
+                    spriteLayer.layerOrder = idelIndex;
+                    orderStack[idelIndex].used = true;
                 }
-                layer._order = this._orderCurrent;
-                this._orderUsed[this._orderCurrent] = true;
-                this._orderCurrent += 1000;
             }
         }
     }
@@ -60,7 +98,6 @@ module.exports = class SVGATimeline {
 
     parseLayerFrame = (layer) => {
         let layerFrame = new SVGALayerFrameEntity();
-        layerFrame.layerOrder = layer._order;
         if (layer.image instanceof Node) {
             let imageKey = layer.image.src.toString().split('/').pop().replace('.png', '').split('?')[0];
             if (imageKey.match(/[^a-zA-Z0-9\.\-\_]/) !== null) {
