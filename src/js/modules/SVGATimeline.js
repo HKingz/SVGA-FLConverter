@@ -131,22 +131,32 @@ module.exports = class SVGATimeline {
             }
             layerFrame.shapes.push(shape);
         }
-        layerFrame.alpha = layer.alpha;
-        let matrix = new Matrix();
-        matrix.translate(-layer.regX, -layer.regY).scale(layer.scaleX, layer.scaleY).rotate(-layer.rotation * Math.PI / 180);
-        matrix.translate(layer.x, layer.y);
-        let currentParnet = layer.parent;
-        while (currentParnet != null && currentParnet != undefined) {
-            matrix.translate(-currentParnet.regX, -currentParnet.regY).scale(currentParnet.scaleX, currentParnet.scaleY).rotate(-currentParnet.rotation * Math.PI / 180);
-            matrix.translate(currentParnet.x, currentParnet.y);
-            currentParnet = currentParnet.parent;
+
+        if (true) {
+            layerFrame.alpha = layer.alpha;
+            let currentParent = layer.parent;
+            while (currentParent != null && currentParent != undefined) {
+                layerFrame.alpha = layerFrame.alpha * currentParent.alpha;
+                currentParent = currentParent.parent;
+            }
         }
-        layerFrame.transform.a = matrix.props[0];
-        layerFrame.transform.b = matrix.props[1];
-        layerFrame.transform.c = matrix.props[4];
-        layerFrame.transform.d = matrix.props[5];
-        layerFrame.transform.tx = matrix.props[12];
-        layerFrame.transform.ty = matrix.props[13];
+        if (true) {
+            let matrix = new Matrix();
+            matrix.translate(-layer.regX, -layer.regY).scale(layer.scaleX, layer.scaleY).rotate(-layer.rotation * Math.PI / 180);
+            matrix.translate(layer.x, layer.y);
+            let currentParent = layer.parent;
+            while (currentParent != null && currentParent != undefined) {
+                matrix.translate(-currentParent.regX, -currentParent.regY).scale(currentParent.scaleX, currentParent.scaleY).rotate(-currentParent.rotation * Math.PI / 180);
+                matrix.translate(currentParent.x, currentParent.y);
+                currentParent = currentParent.parent;
+            }
+            layerFrame.transform.a = matrix.props[0];
+            layerFrame.transform.b = matrix.props[1];
+            layerFrame.transform.c = matrix.props[4];
+            layerFrame.transform.d = matrix.props[5];
+            layerFrame.transform.tx = matrix.props[12];
+            layerFrame.transform.ty = matrix.props[13];
+        }
         layerFrame.clipPath = (new SVGAMaskHelper(layer)).requestMaskPath();
         return layerFrame;
     }
@@ -159,22 +169,17 @@ module.exports = class SVGATimeline {
                 let frameSprite = frameSprites[layerIdx];
                 if (sprites[frameSprite.layerOrder] === undefined) {
                     sprites[frameSprite.layerOrder] = [];
-                    for (let index = 0; index < frameIdx; index++) {
+                    for (var index = 0; index < frameIdx; index++) {
                         sprites[frameSprite.layerOrder].push({});
                     }
                 }
-                if (frameSprite.alpha <= 0.0) {
-                    sprites[frameSprite.layerOrder].push({});
-                }
-                else {
-                    sprites[frameSprite.layerOrder].push(frameSprite);
-                }
+                sprites[frameSprite.layerOrder].push(frameSprite);
             }
-            for (var spriteKey in sprites) {
-                if (sprites.hasOwnProperty(spriteKey)) {
-                    var element = sprites[spriteKey];
-                    if (element.length - 1 < frameIdx) {
-                        element.push({});
+            for (var key in sprites) {
+                if (sprites.hasOwnProperty(key)) {
+                    var element = sprites[key];
+                    if (element[frameIdx] === undefined) {
+                        sprites[key].push({});
                     }
                 }
             }
