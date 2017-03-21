@@ -22,59 +22,63 @@ module.exports = class SVGATimeline {
     };
 
     resetOrders = () => {
-        let orderStack = [];
-        let orderStackIdelIndex = (imageKey) => {
-            for (let index = 0; index < orderStack.length; index++) {
-                let element = orderStack[index];
-                if (element.imageKey === imageKey && element.used === false) {
-                    return index;
-                }
-            }
-            return null;
-        }
+        let orderedKeys = [];
         for (let frameIdx = 0; frameIdx < this._frames.length; frameIdx++) {
             let spriteLayers = this._frames[frameIdx];
-            for (let index = 0; index < orderStack.length; index++) {
-                let element = orderStack[index];
-                element.used = false;
-            }
+            let cIndexes = orderedKeys.map((item) => {
+                return {
+                    aKey: item,
+                    used: false,
+                }
+            });
+            let dIndexes = [];
+            let eIndexes = [];
             for (let layerIdx = 0; layerIdx < spriteLayers.length; layerIdx++) {
                 let spriteLayer = spriteLayers[layerIdx];
-                let idelIndex = orderStackIdelIndex(spriteLayer.imageKey);
-                if (idelIndex === null) {
-                    let insertIdx = null;
-                    for (let layerIdx = 0; layerIdx < spriteLayers.length; layerIdx++) {
-                        let spriteLayer = spriteLayers[layerIdx];
-                        let idelIndex = orderStackIdelIndex(spriteLayer.imageKey);
-                        if (idelIndex !== null) {
-                            insertIdx = idelIndex;
-                            break;
-                        }
+                let found = false;
+                for (var index = 0; index < cIndexes.length; index++) {
+                    var element = cIndexes[index];
+                    if (element.used === false && element.aKey === spriteLayer.imageKey) {
+                        element.used = true;
+                        dIndexes.push(element.aKey);
+                        found = true;
+                        break;
                     }
-                    if (insertIdx === null) {
-                        orderStack.push({imageKey: spriteLayer.imageKey, used: true});
+                }
+                if (found) {
+                    for (var index = 0; index < eIndexes.length; index++) {
+                        dIndexes.splice(-1, 0, eIndexes[index]);
                     }
-                    else {
-                        orderStack.splice(insertIdx, 0, {imageKey: spriteLayer.imageKey, used: true});
-                    }
+                    eIndexes = [];
                 }
                 else {
-                    orderStack[idelIndex].used = true;
+                    eIndexes.push(spriteLayer.imageKey);
                 }
             }
+            if (eIndexes.length > 0) {
+                for (var index = 0; index < eIndexes.length; index++) {
+                    dIndexes.push(eIndexes[index]);
+                }
+            }
+            orderedKeys = dIndexes;
         }
         for (let frameIdx = 0; frameIdx < this._frames.length; frameIdx++) {
             let spriteLayers = this._frames[frameIdx];
-            for (let index = 0; index < orderStack.length; index++) {
-                let element = orderStack[index];
-                element.used = false;
-            }
+            let cIndexes = orderedKeys.map((item) => {
+                return {
+                    aKey: item,
+                    used: false,
+                }
+            });
             for (let layerIdx = 0; layerIdx < spriteLayers.length; layerIdx++) {
                 let spriteLayer = spriteLayers[layerIdx];
-                let idelIndex = orderStackIdelIndex(spriteLayer.imageKey);
-                if (idelIndex != null) {
-                    spriteLayer.layerOrder = idelIndex;
-                    orderStack[idelIndex].used = true;
+                for (var index = 0; index < cIndexes.length; index++) {
+                    var element = cIndexes[index];
+                    if (element.used === false && element.aKey === spriteLayer.imageKey) {
+                        element.used = true;
+                        spriteLayer.layerOrder = index;
+                        break;
+                    }
                 }
             }
         }
@@ -220,7 +224,7 @@ module.exports = class SVGATimeline {
             }
             return hasTrimmed
         }
-        while(trim(sprites)) {}
+        while (trim(sprites)) { }
         return sprites;
     }
 
