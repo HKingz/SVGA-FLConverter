@@ -23,44 +23,13 @@ module.exports = class SVGATimeline {
 
     resetOrders = () => {
         let orderedKeys = [];
-        for (let frameIdx = 0; frameIdx < this._frames.length; frameIdx++) {
-            let spriteLayers = this._frames[frameIdx];
-            let cIndexes = orderedKeys.map((item) => {
-                return {
-                    aKey: item,
-                    used: false,
-                }
+        let keys = this._frames.map((spriteLayers) => {
+            return spriteLayers.map((spriteLayer) => {
+                return spriteLayer.imageKey;
             });
-            let dIndexes = [];
-            let eIndexes = [];
-            for (let layerIdx = 0; layerIdx < spriteLayers.length; layerIdx++) {
-                let spriteLayer = spriteLayers[layerIdx];
-                let found = false;
-                for (var index = 0; index < cIndexes.length; index++) {
-                    var element = cIndexes[index];
-                    if (element.used === false && element.aKey === spriteLayer.imageKey) {
-                        element.used = true;
-                        dIndexes.push(element.aKey);
-                        found = true;
-                        break;
-                    }
-                }
-                if (found) {
-                    for (var index = 0; index < eIndexes.length; index++) {
-                        dIndexes.splice(-1, 0, eIndexes[index]);
-                    }
-                    eIndexes = [];
-                }
-                else {
-                    eIndexes.push(spriteLayer.imageKey);
-                }
-            }
-            if (eIndexes.length > 0) {
-                for (var index = 0; index < eIndexes.length; index++) {
-                    dIndexes.push(eIndexes[index]);
-                }
-            }
-            orderedKeys = dIndexes;
+        });
+        for (let index = 0; index < keys.length; index++) {
+            orderedKeys = this.combineString(orderedKeys, keys[index]);
         }
         for (let frameIdx = 0; frameIdx < this._frames.length; frameIdx++) {
             let spriteLayers = this._frames[frameIdx];
@@ -77,11 +46,134 @@ module.exports = class SVGATimeline {
                     if (element.used === false && element.aKey === spriteLayer.imageKey) {
                         element.used = true;
                         spriteLayer.layerOrder = index;
+                        for (let mIndex = 0; mIndex < index; mIndex++) {
+                            cIndexes[mIndex].used = true;
+                        }
                         break;
                     }
                 }
             }
         }
+    }
+
+    combineString(arr1, arr2) {
+        if (arr1.length == 0) {
+            return arr2;
+        }
+        else if (arr2.length == 0) {
+            return arr1;
+        }
+        var matchRanges = [];
+        function findRanges() {
+            for (var index2 = 0; index2 < arr2.length; index2++) {
+                var range = {
+                    location: index2,
+                    length: 0,
+                    aLocation: -1,
+                    aLength: 0,
+                };
+                var used = {};
+                for (var index2_2 = index2; index2_2 < arr2.length; index2_2++) {
+                    var element2_2 = arr2[index2_2];
+                    var found = false;
+                    for (var index1 = 0; index1 < arr1.length; index1++) {
+                        var element1 = arr1[index1];
+                        if (element1 === element2_2 && used[index1] !== true) {
+                            for (var i = 0; i <= index1; i++) {
+                                used[i] = true;
+                            }
+                            found = true;
+                            range.length = index2_2 - index2 + 1;
+                            if (range.aLocation < 0) {
+                                range.aLocation = index1;
+                            }
+                            range.aLength = index1 - range.aLocation + 1;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        break;
+                    }
+                }
+                if (range.length > 0) {
+                    matchRanges.push(range);
+                }
+            }
+        }
+        function trimRanges() {
+            var found = false;
+            for (var aIndex = 0; aIndex < matchRanges.length; aIndex++) {
+                var a = matchRanges[aIndex];
+                for (var bIndex = 0; bIndex < matchRanges.length; bIndex++) {
+                    var b = matchRanges[bIndex];
+                    if (aIndex === bIndex) {
+                        continue;
+                    }
+                    if (a.location <= b.location && a.location + a.length >= b.location + b.length) {
+                        matchRanges.splice(bIndex, 1);
+                        found = true;
+                        break;
+                    }
+                    else if (b.location <= a.location && b.location + b.length >= a.location + a.length) {
+                        matchRanges.splice(aIndex, 1);
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) {
+                    break;
+                }
+            }
+            return found;
+        }
+        function createArray() {
+            var newArray = [];
+            if (matchRanges.length == 0) {
+                for (var index = 0; index < arr1.length; index++) {
+                    newArray.push(arr1[index]);
+                }
+                for (var index = 0; index < arr2.length; index++) {
+                    newArray.push(arr2[index]);
+                }
+                return newArray;
+            }
+            matchRanges.sort((a, b) => { return a.location > b.location ? 1 : -1 });
+            var aLeft = 0;
+            var bLeft = 0;
+            for (var matchIndex = 0; matchIndex < matchRanges.length; matchIndex++) {
+                var matchRange = matchRanges[matchIndex];
+                var aLeftValues = arr1.slice(aLeft, matchRange.aLocation);
+                var bLeftValues = arr2.slice(bLeft, matchRange.location);
+                var aMidValues = arr1.slice(matchRange.aLocation, matchRange.aLocation + matchRange.aLength);
+                for (var index = 0; index < aLeftValues.length; index++) {
+                    newArray.push(aLeftValues[index]);
+                }
+                for (var index = 0; index < bLeftValues.length; index++) {
+                    newArray.push(bLeftValues[index]);
+                }
+                for (var index = 0; index < aMidValues.length; index++) {
+                    newArray.push(aMidValues[index]);
+                }
+                if (matchIndex == matchRanges.length - 1) {
+                    var aRightValues = arr1.slice(matchRange.aLocation + matchRange.aLength, arr1.length);
+                    var bRightValues = arr2.slice(matchRange.location + matchRange.length, arr2.length);
+                    for (var index = 0; index < aRightValues.length; index++) {
+                        newArray.push(aRightValues[index]);
+                    }
+                    for (var index = 0; index < bRightValues.length; index++) {
+                        newArray.push(bRightValues[index]);
+                    }
+                }
+                else {
+                    aLeft = matchRange.aLocation + matchRange.aLength;
+                    bLeft = matchRange.location + matchRange.length;
+                }
+            }
+            return newArray;
+        }
+        findRanges();
+        while (trimRanges());
+        return createArray();
     }
 
     findLayerFrames = (layer) => {
@@ -169,15 +261,15 @@ module.exports = class SVGATimeline {
                 let frameSprite = frameSprites[layerIdx];
                 if (sprites[frameSprite.layerOrder] === undefined) {
                     sprites[frameSprite.layerOrder] = [];
-                    for (var index = 0; index < frameIdx; index++) {
+                    for (let index = 0; index < frameIdx; index++) {
                         sprites[frameSprite.layerOrder].push({});
                     }
                 }
                 sprites[frameSprite.layerOrder].push(frameSprite);
             }
-            for (var key in sprites) {
+            for (let key in sprites) {
                 if (sprites.hasOwnProperty(key)) {
-                    var element = sprites[key];
+                    let element = sprites[key];
                     if (element[frameIdx] === undefined) {
                         sprites[key].push({});
                     }
@@ -188,9 +280,9 @@ module.exports = class SVGATimeline {
             let hasTrimmed = false;
             let targetA = null;
             let targetB = null;
-            for (var aKey in sprites) {
+            for (let aKey in sprites) {
                 if (sprites.hasOwnProperty(aKey)) {
-                    var element = sprites[aKey];
+                    let element = sprites[aKey];
                     if (hasTrimmed) {
                         return;
                     }
