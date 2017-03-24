@@ -266,6 +266,9 @@ module.exports = class SVGATimeline {
                     }
                 }
                 sprites[frameSprite.layerOrder].push(frameSprite);
+                if (frameSprite.imageKey) {
+                    sprites[frameSprite.layerOrder].imageKey = frameSprite.imageKey;
+                }
             }
             for (let key in sprites) {
                 if (sprites.hasOwnProperty(key)) {
@@ -290,7 +293,8 @@ module.exports = class SVGATimeline {
                         targetA = element;
                     }
                     else {
-                        if (targetA.imageKey === element.imageKey) {
+                        if (targetA.imageKey === element.imageKey || 
+                            (targetA.imageKey.indexOf(".vector") > 0 && element.imageKey.indexOf(".vector") > 0)) {
                             targetB = element;
                             for (let index = 0; index < this._movie.frameCount; index++) {
                                 if (Object.keys(targetA[index]).length > 0 && Object.keys(targetB[index]).length > 0) {

@@ -7,6 +7,10 @@ module.exports = class SVGAResourceHelper {
     }
 
     copyToZIP = (zip, callback) => {
+        if (Object.keys(this.resource).length == 0) {
+            callback({});
+            return;
+        }
         let self = this;
         let imageLoaded = 0;
         let result = {};

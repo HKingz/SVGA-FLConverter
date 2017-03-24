@@ -18,7 +18,12 @@ module.exports = class SVGAWriter {
             zip.generateAsync({type: "blob", compression: "DEFLATE"}).then((blob) => {
                 callback(blob);
                 document.querySelector('.downloadButton').onclick = () => {
-                    saveAs(blob, document.title + "_" + (new Date()).toLocaleDateString() + ".svga");
+                    if (navigator.userAgent.indexOf("Chrome") < 0) {
+                        alert("请复制 URL， 然后使用 Chrome 浏览器打开此页面");
+                    }
+                    else {
+                        saveAs(blob, document.title + "_" + (new Date()).toLocaleDateString() + ".svga");
+                    }
                 }
             }, (err) => {
                 console.log(err);
