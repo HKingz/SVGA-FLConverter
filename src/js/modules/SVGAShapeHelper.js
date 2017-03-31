@@ -40,7 +40,7 @@ module.exports = class SVGAShapeHelper {
     }
 
     requestColorArray = (stringValue) => {
-        if (!(stringValue instanceof String)) {
+        if (typeof stringValue != "string") {
             return [0.0, 0.0, 0.0, 1.0];
         }
         let sValue = stringValue.replace('#', '');
