@@ -287,14 +287,14 @@ module.exports = class SVGATimeline {
                 if (sprites.hasOwnProperty(aKey)) {
                     let element = sprites[aKey];
                     if (hasTrimmed) {
-                        return;
+                        break;
                     }
                     if (targetA === null) {
                         targetA = element;
                     }
                     else {
                         if (targetA.imageKey === element.imageKey || 
-                            (targetA.imageKey.indexOf(".vector") > 0 && element.imageKey.indexOf(".vector") > 0)) {
+                            (targetA.imageKey && targetA.imageKey.indexOf(".vector") > 0 && element.imageKey && element.imageKey.indexOf(".vector") > 0)) {
                             targetB = element;
                             for (let index = 0; index < this._movie.frameCount; index++) {
                                 if (Object.keys(targetA[index]).length > 0 && Object.keys(targetB[index]).length > 0) {

@@ -40,6 +40,9 @@ module.exports = class SVGAShapeHelper {
     }
 
     requestColorArray = (stringValue) => {
+        if (!(stringValue instanceof String)) {
+            return [0.0, 0.0, 0.0, 1.0];
+        }
         let sValue = stringValue.replace('#', '');
         if (sValue.length == 6) {
             let rStr = sValue.substr(0, 2)
