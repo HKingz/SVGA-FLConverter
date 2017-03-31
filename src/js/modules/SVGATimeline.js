@@ -238,8 +238,18 @@ module.exports = class SVGATimeline {
             matrix.translate(layer.x, layer.y);
             let currentParent = layer.parent;
             while (currentParent != null && currentParent != undefined) {
-                matrix.translate(-currentParent.regX, -currentParent.regY).scale(currentParent.scaleX, currentParent.scaleY).rotate(-currentParent.rotation * Math.PI / 180);
-                matrix.translate(currentParent.x, currentParent.y);
+                if (!isNaN(currentParent.regX) && !isNaN(currentParent.regY)) {
+                    matrix.translate(-currentParent.regX, -currentParent.regY)
+                }
+                if (!isNaN(currentParent.scaleX) && !isNaN(currentParent.scaleY)) {
+                    matrix.scale(currentParent.scaleX, currentParent.scaleY);
+                }
+                if (!isNaN(currentParent.rotation)) {
+                    matrix.rotate(-currentParent.rotation * Math.PI / 180);
+                }
+                if (!isNaN(currentParent.x) && !isNaN(currentParent.regY)) {
+                    matrix.translate(currentParent.x, currentParent.y);
+                }
                 currentParent = currentParent.parent;
             }
             layerFrame.transform.a = matrix.props[0];
