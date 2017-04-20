@@ -33,7 +33,7 @@ module.exports = class SVGAResourceHelper {
                         let compressedBlob = new Blob([compressedData.data.buffer]);
                         zip.file(zipFilename, compressedBlob);
                         imageLoaded++;
-                        result[imageKey] = zipFilename;
+                        result[imageKey] = imageKey;
                         if (imageLoaded >= Object.keys(self.resource).length) {
                             callback(result);
                         }
