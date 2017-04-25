@@ -233,31 +233,19 @@ module.exports = class SVGATimeline {
             }
         }
         if (true) {
-            let matrix = new Matrix();
-            matrix.translate(-layer.regX, -layer.regY).scale(layer.scaleX, layer.scaleY).rotate(-layer.rotation * Math.PI / 180);
-            matrix.translate(layer.x, layer.y);
+            let matrix = new createjs.Matrix2D();
+            matrix = matrix.appendMatrix(new createjs.Matrix2D(layer._props.matrix.a, layer._props.matrix.b, layer._props.matrix.c, layer._props.matrix.d, layer._props.matrix.tx, layer._props.matrix.ty))
             let currentParent = layer.parent;
             while (currentParent != null && currentParent != undefined) {
-                if (!isNaN(currentParent.regX) && !isNaN(currentParent.regY)) {
-                    matrix.translate(-currentParent.regX, -currentParent.regY)
-                }
-                if (!isNaN(currentParent.scaleX) && !isNaN(currentParent.scaleY)) {
-                    matrix.scale(currentParent.scaleX, currentParent.scaleY);
-                }
-                if (!isNaN(currentParent.rotation)) {
-                    matrix.rotate(-currentParent.rotation * Math.PI / 180);
-                }
-                if (!isNaN(currentParent.x) && !isNaN(currentParent.regY)) {
-                    matrix.translate(currentParent.x, currentParent.y);
-                }
+                matrix = new createjs.Matrix2D(currentParent._props.matrix.a, currentParent._props.matrix.b, currentParent._props.matrix.c, currentParent._props.matrix.d, currentParent._props.matrix.tx, currentParent._props.matrix.ty).appendMatrix(matrix)
                 currentParent = currentParent.parent;
             }
-            layerFrame.transform.a = matrix.props[0];
-            layerFrame.transform.b = matrix.props[1];
-            layerFrame.transform.c = matrix.props[4];
-            layerFrame.transform.d = matrix.props[5];
-            layerFrame.transform.tx = matrix.props[12];
-            layerFrame.transform.ty = matrix.props[13];
+            layerFrame.transform.a = matrix.a;
+            layerFrame.transform.b = matrix.b;
+            layerFrame.transform.c = matrix.c;
+            layerFrame.transform.d = matrix.d;
+            layerFrame.transform.tx = matrix.tx;
+            layerFrame.transform.ty = matrix.ty;
         }
         layerFrame.clipPath = (new SVGAMaskHelper(layer)).requestMaskPath();
         return layerFrame;
