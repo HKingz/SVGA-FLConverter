@@ -15,8 +15,8 @@ module.exports = class SVGAMaskHelper {
             d += (new SVGAPathHelper(this.layer.mask.graphics)).requestPath({x: 0.0, y: 0.0});
             hasMask = true;
         }
-        let offsetX = this.layer.x;
-        let offsetY = this.layer.y;
+        let offsetX = this.layer.x - this.layer.regX;
+        let offsetY = this.layer.y - this.layer.regY;
         let parents = []
         let currentLayer = this.layer.parent;
         while (currentLayer != null && currentLayer != undefined) {
@@ -25,8 +25,8 @@ module.exports = class SVGAMaskHelper {
         }
         for (let index = parents.length - 1; index >= 0; index--) {
             let element = parents[index];
-            offsetX += element.x;
-            offsetY += element.y;
+            offsetX += element.x - element.regX;
+            offsetY += element.y - element.regY;
             if (element.mask != null && element.mask != undefined) {
                 d += (new SVGAPathHelper(element.mask.graphics)).requestPath({x: -(offsetX - element.mask.x), y: -(offsetY - element.mask.y)});
                 hasMask = true;
