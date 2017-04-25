@@ -28,6 +28,7 @@ module.exports = class SVGAMaskHelper {
             offsetX += element.x - element.regX;
             offsetY += element.y - element.regY;
             if (element.mask != null && element.mask != undefined) {
+                console.log(element.mask)
                 d += (new SVGAPathHelper(element.mask.graphics)).requestPath({x: -(offsetX - element.mask.x), y: -(offsetY - element.mask.y)});
                 hasMask = true;
             }
