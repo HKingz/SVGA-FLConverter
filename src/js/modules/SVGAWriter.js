@@ -15,10 +15,11 @@ module.exports = class SVGAWriter {
         resourceHelper.copyToZIP(zip, (result) => {
             this.resources = result;
             zip.file("movie.spec", JSON.stringify(this.createSpec()));
-            zip.generateAsync({type: "blob", compression: "DEFLATE"}).then((blob) => {
+            zip.generateAsync({ type: "blob", compression: "DEFLATE" }).then((blob) => {
                 callback(blob);
                 document.querySelector('.downloadButton').onclick = () => {
-                    if (navigator.userAgent.indexOf("Chrome") < 0) {
+                    if (window.cep !== undefined) {}
+                    else if (navigator.userAgent.indexOf("Chrome") < 0) {
                         alert("请复制 URL， 然后使用 Chrome 浏览器打开此页面");
                     }
                     else {
@@ -47,7 +48,7 @@ module.exports = class SVGAWriter {
                 }
                 let r = {
                     imageKey: imageKey(),
-                    frames: element.map(function(item) {
+                    frames: element.map(function (item) {
                         return {
                             alpha: item.alpha,
                             layout: item.layout,

@@ -32,6 +32,14 @@ var onTick = function (event) {
         timeline.resetOrders();
         let writer = new SVGAWriter(timeline);
         writer.createZIPPackage((blob) => {
+            if (window.cep !== undefined) {
+                var reader = new window.FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function () {
+                    base64data = reader.result;
+                    window.top.saveAs(base64data.replace("data:application/zip;base64,", ""))
+                }
+            }
             onConverted(blob);
         });
     }
@@ -39,14 +47,19 @@ var onTick = function (event) {
 }
 
 var onConverted = function (blob) {
-    document.querySelector('#canvas').style.opacity = 1.0;
-    document.querySelector('.downloadButton').innerHTML = "下载 SVGA 文件";
-    var player = new Svga.Player('#canvas');
-    var parser = new Svga.Parser();
-    parser.load(new File([blob], 'output.svga'), function (videoItem) {
-        player.setVideoItem(videoItem);
-        player.startAnimation();
-    });
+    var reader = new window.FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = function () {
+        base64data = reader.result;
+        document.querySelector('#canvas').style.opacity = 1.0;
+        document.querySelector('.downloadButton').innerHTML = "下载 SVGA 文件";
+        var player = new Svga.Player('#canvas');
+        var parser = new Svga.Parser();
+        parser.load(base64data.replace("data:application/zip;base64,", "data:image/svga;base64,"), function (videoItem) {
+            player.setVideoItem(videoItem);
+            player.startAnimation();
+        });
+    }
 }
 
 handleComplete = function (event) {
