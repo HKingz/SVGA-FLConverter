@@ -6,5 +6,6 @@
     "webp": "false",
     "legolib": "false",
     "alias": {},
-    "global": {}
+    "global": {},
+    "shell": "./build-js.sh"
 }

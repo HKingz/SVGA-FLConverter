@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5e9ff4ee-bc96-435e-894c-b0c363910533" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/pngquant/OSX/pngquant-openmp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/pngquant/OSX/pngquant-ppc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/res/loading.svga" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ZXPSignCmd/ZXPSignCmd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ZXPSignCmd/ZXPSignCmd-minimal" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ZXPSignCmd/ZXPSignCmd-minimal.dSYM/Contents/Resources/DWARF/ZXPSignCmd-minimal" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ZXPSignCmd/ZXPSignCmd.dSYM/Contents/Resources/DWARF/ZXPSignCmd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ZXPSignCmd/errnull.p12" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mac/ZXPInstaller.dmg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/CSXS/manifest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/host/SVGAHost.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/pngquant/OSX/COPYRIGHT" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/pngquant/OSX/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/pngquant/OSX/pngquant" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/pngquant/WINDOWS/COPYRIGHT" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/pngquant/WINDOWS/Drag PNG here to reduce palette automatically.bat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/pngquant/WINDOWS/Drag PNG here to reduce palette to 256.bat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/pngquant/WINDOWS/README.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/pngquant/WINDOWS/pngquant.exe" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/actions/PageActions.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/assets/jquery.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/assets/jszip.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/assets/pngquant.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/assets/rangeslider.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/assets/svga-worker.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/assets/svga.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/assets/zip.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/css/bootstrap-slider.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/css/bootstrap-slider.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/css/bootstrap.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/css/main.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/css/rangeslider.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/helpers/CSInterface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Converter/src/helpers/CSInterfaceHelper.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ZXPSignCmd/ZXPSignCmd-minimal.dSYM/Contents/Info.plist" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ZXPSignCmd/ZXPSignCmd.dSYM/Contents/Info.plist" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build-js.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/windows/ZXPInstaller.Setup.exe" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/SVGA-FLConveter.apr.zip" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/legoflow.json" afterPath="$PROJECT_DIR$/legoflow.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sass/main.scss" afterPath="$PROJECT_DIR$/src/sass/main.scss" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="legoflow.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/legoflow.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="1" lean-forward="false" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build-js.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build-js.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="21" column="42" lean-forward="false" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SVGA-FLConveter.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SVGA-FLConveter.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="563">
+              <caret line="48" column="39" lean-forward="false" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SVGA-FLConveter.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SVGA-FLConveter.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="31421">
+              <caret line="0" column="2443023" lean-forward="true" selection-start-line="0" selection-start-column="2443023" selection-end-line="0" selection-end-column="2443023" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="manifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Converter/CSXS/manifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="612">
+              <caret line="36" column="36" lean-forward="false" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_sample.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dist/_sample.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1495622308000" expanded="true" signature="8793:8812" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dist/css/main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="289" lean-forward="false" selection-start-line="6" selection-start-column="289" selection-end-line="6" selection-end-column="289" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/sass/main.scss" />
+        <option value="$PROJECT_DIR$/build-js.sh" />
+        <option value="$PROJECT_DIR$/shell.js" />
+        <option value="$PROJECT_DIR$/legoflow.json" />
+        <option value="$PROJECT_DIR$/SVGA-FLConveter.html" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1440" />
+    <option name="y" value="-476" />
+    <option name="width" value="1080" />
+    <option name="height" value="1916" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SVGAConverter_FL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SVGAConverter_FL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Converter" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/Converter" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/Converter" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui />
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5e9ff4ee-bc96-435e-894c-b0c363910533" name="Default" comment="" />
+      <created>1495613252618</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1495613252618</updated>
+      <workItem from="1495613254961" duration="8081000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="8081000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1440" y="-476" width="1080" height="1916" extended-state="6" />
+    <layout>
+      <window_info id="Project" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24890351" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294956" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294956" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294956" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="processedProjectFiles" value="true" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sass/main.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="12" lean-forward="true" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="289" lean-forward="false" selection-start-line="6" selection-start-column="289" selection-end-line="6" selection-end-column="289" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/_sample.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1495622308000" expanded="true" signature="8793:8812" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/windows/svga.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shell.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="1" lean-forward="true" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/legoflow.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="1" lean-forward="false" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Converter/CSXS/manifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="36" lean-forward="false" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build-js.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="42" lean-forward="false" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SVGA-FLConveter.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="563">
+          <caret line="48" column="39" lean-forward="false" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SVGA-FLConveter.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="31421">
+          <caret line="0" column="2443023" lean-forward="true" selection-start-line="0" selection-start-column="2443023" selection-end-line="0" selection-end-column="2443023" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
