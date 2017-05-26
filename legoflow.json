@@ -7,5 +7,5 @@
     "legolib": "false",
     "alias": {},
     "global": {},
-    "shell": "./build-js.sh"
+    "shell": "./shell.js"
 }

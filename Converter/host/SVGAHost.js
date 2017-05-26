@@ -41,7 +41,7 @@ var startConvert = function (paths) {
                 fl.trace(fl.configURI + 'Commands/Convert to Other Document Formats.jsfl');
 
                 fl.runScript(fl.configURI + 'Commands/Convert to Other Document Formats.jsfl');
-                // doc.close(false);
+                doc.close(false);
                 doc = fl.getDocumentDOM();
             }
         }

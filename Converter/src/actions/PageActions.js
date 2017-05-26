@@ -1,4 +1,5 @@
 var csInterface = new CSInterface();
+var fs = require('fs');
 var nodePath = require("path");
 var spawn = require("child_process");
 
@@ -12,12 +13,14 @@ var httpServer;
 
 var CURRENT_SOURCE_PATH;
 var CURRENT_SOURCE_NAME;
+var TEMP_SOURCE_PATH;
 var CURRENT_PROJECT_PATH = csInterface.getSystemPath(SystemPath.APPLICATION);
 
 csInterface.evalScript("getActiveInfo()", function (result) {
 
     CURRENT_SOURCE_PATH = nodePath.dirname(result);
     CURRENT_SOURCE_NAME = nodePath.basename(result, '.fla');
+    TEMP_SOURCE_PATH = nodePath.join(CURRENT_SOURCE_PATH, '_WORKINGTEMP_');
 
 });
 
@@ -25,10 +28,12 @@ function selectPath() {
 
     var result = window.cep.fs.showSaveDialogEx ("选择保存目录", CURRENT_SOURCE_PATH, ["svga"], CURRENT_SOURCE_NAME + '.svga', '');
 
-    outPutPath = result.data;
+    if (result.data){
+        outPutPath = result.data;
 
-    var startConvertBtn = document.getElementById("startConvertBtn");
-    startConvertBtn.disabled = false;
+        var startConvertBtn = document.getElementById("startConvertBtn");
+        startConvertBtn.disabled = false;
+    }
 }
 
 function startConvert() {
@@ -37,23 +42,67 @@ function startConvert() {
         alert("请先选择输出路径...");
 
     }else {
-        var startConvertBtn = document.getElementById("startConvertBtn");
-        startConvertBtn.disabled = true;
 
-        csInterface.evalScript("startConvert('"+ getAbsoluURIForPath(CURRENT_SOURCE_PATH) + '_and_' + getAbsoluURIForPath(nodePath.join(CURRENT_PROJECT_PATH, 'src', 'assets', 'SVGA-FLConveter.apr'))  +"');", function (res) {
+        copySourceToTempFolder(function () {
 
-            // 将资源图片全部压缩
-            var fs = require('fs')
+            var startConvertBtn = document.getElementById("startConvertBtn");
+            startConvertBtn.disabled = true;
 
-            fs.readdirSync(nodePath.join(CURRENT_SOURCE_PATH, 'images')).forEach(function (file) {
+            csInterface.evalScript("startConvert('"+ getAbsoluURIForPath(TEMP_SOURCE_PATH) + '_and_' + getAbsoluURIForPath(nodePath.join(CURRENT_PROJECT_PATH, 'src', 'assets', 'SVGA-FLConveter.apr'))  +"');", function (res) {
 
-                var imgPath = nodePath.join(CURRENT_SOURCE_PATH, 'images', file);
-                pngquantImage(imgPath, imgPath);
+                var files = fs.readdirSync(nodePath.join(TEMP_SOURCE_PATH, 'images'));
 
+                // 将资源图片全部压缩
+                files.forEach(function (file, index) {
+
+                    var imgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', file);
+                    var outImgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', encodeURIComponent(file));
+                    var isLastImage = index == (files.length - 1);
+
+                    pngquantImage(imgPath, outImgPath, isLastImage, function () {
+
+                        setTimeout("createHTTPServer()", 500);
+                    });
+                });
             });
-
-            setTimeout("createHTTPServer()",500);
         });
+    }
+}
+
+function copySourceToTempFolder(callback) {
+
+    // 删除临时文件目录
+    deleteFlider(TEMP_SOURCE_PATH, true, function () {
+
+        // 创建 temp 文件夹
+        fs.mkdir(TEMP_SOURCE_PATH, function () {
+
+            // 复制资源到 temp 文件夹
+            fs.readFile(nodePath.join(CURRENT_SOURCE_PATH, CURRENT_SOURCE_NAME + '.fla'), function(err,data){
+                fs.writeFile(nodePath.join(TEMP_SOURCE_PATH, 'tempConvertedFile.fla'),data,function(err){
+                    callback();
+                });
+            });
+        });
+    });
+}
+
+function deleteFlider(path, isFirstFolder, callback) {
+
+    if(fs.existsSync(path)) {
+        fs.readdirSync(path).forEach(function (file) {
+
+            var curPath = nodePath.join(path, file);
+            if(fs.statSync(curPath).isDirectory()) { // recurse
+                deleteFlider(curPath, false);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
+    if (isFirstFolder){
+        callback();
     }
 }
 
@@ -65,16 +114,15 @@ function createHTTPServer() {
     httpServer = http.createServer(function (req, res)
     {
         // CURRENT_SOURCE_PATH + req.url.split('?')[0]
-        require("fs").createReadStream(nodePath.join(CURRENT_SOURCE_PATH, req.url.split('?')[0])).pipe(res);
+        fs.createReadStream(nodePath.join(TEMP_SOURCE_PATH, req.url.split('?')[0])).pipe(res);
     }).listen(port, '127.0.0.1');
 
     // 创建 iFrame 标签，转换数据
     var converteriFrame = document.getElementById("ConverterFrame");
     var newiFrame = document.createElement("iframe");
 
-    // <iframe id="ConverterFrame" src="http://127.0.0.1:10045/shengli_Canvas.html" width="0" height="0" style="display: none"></iframe>
     newiFrame.setAttribute('id', 'ConverterFrame');
-    newiFrame.setAttribute('src', 'http://127.0.0.1:10045/'+ CURRENT_SOURCE_NAME +'_Canvas.html');
+    newiFrame.setAttribute('src', 'http://127.0.0.1:10045/tempConvertedFile_Canvas.html');
     newiFrame.setAttribute('width', '0');
     newiFrame.setAttribute('height', '0');
     newiFrame.style.display = 'none';
@@ -100,7 +148,6 @@ function getAbsoluURIForPath(path) {
     {
         result = 'file://' + path;
     }
-
     return result;
 }
 
@@ -121,17 +168,11 @@ function saveAs(result) {
     // 将文件写入本地
     window.cep.fs.writeFile (outPutPath, result, "Base64");
 
+    // 删除 temp 目录
+    deleteFlider(TEMP_SOURCE_PATH, true, function () {});
+
     preview(outPutPath);
     outPutPath = undefined;
-
-
-    // 删除资源文件
-    var fs = require('fs')
-    fs.readdirSync(CURRENT_SOURCE_PATH + '/images').forEach(function (file) {
-
-        // CURRENT_SOURCE_PATH + '/images/' + file
-        window.cep.fs.deleteFile(nodePath.join(CURRENT_SOURCE_PATH, 'images', file));
-    });
 }
 
 function selectFile() {
@@ -182,9 +223,10 @@ function previewWithVideoItems(videoItem) {
     player.startAnimation();
 }
 
-function pngquantImage(inImgPath, outImgPath) {
+function pngquantImage(inImgPath, outImgPath, isLastImage, callback) {
 
     var program;
+    var programWriteFile;
 
     // 判断当前系统
     var OSVersion = csInterface.getOSInformation();
@@ -207,6 +249,12 @@ function pngquantImage(inImgPath, outImgPath) {
         outImgPath,
         '--force'
     ];
-
     spawn.execSync(program + ' ' + args.join(' '));
+
+    if (isLastImage){
+        programWriteFile = 'echo "WriteEnd" > ' + nodePath.join(TEMP_SOURCE_PATH, 'result');
+        spawn.exec(programWriteFile, function () {
+            callback();
+        });
+    }
 }
