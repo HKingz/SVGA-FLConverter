@@ -43,6 +43,7 @@ var onTick = function (event) {
             onConverted(blob);
         });
     }
+    window.top.LoadingPercent(parseInt(currentFrame / totalFrames * 100))
     document.querySelector('.downloadButton').innerHTML = "转换中：" + parseInt(currentFrame / totalFrames * 100) + "%";
 }
 

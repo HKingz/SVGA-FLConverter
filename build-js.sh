@@ -20,8 +20,15 @@ cd ./ZXPSignCmd/
 
 ./ZXPSignCmd  -sign  "../bin/com.errnull.SVGAConverter_FL"  "../bin/SVGAConverter_FL.zxp"  "./errnull.p12"  "zhan"
 
+cp -f ../bin/SVGAConverter_FL.zxp ../mac
 cp -f ../bin/SVGAConverter_FL.zxp ../windows
 
-cp -f ../bin/SVGAConverter_FL.zxp ../mac
+cd ../windows/
+mkdir ./SVGAConverter_FL
+cp -f ../install.bat ./SVGAConverter_FL
+cp -f ../modify.reg ./SVGAConverter_FL
+unzip -o -d ./SVGAConverter_FL/sources/ ./SVGAConverter_FL.zxp
+zip -r ./SVGAConverter_FL.zip ./SVGAConverter_FL/*
 
+rm -rf ./SVGAConverter_FL
 rm -rf ../bin/com.errnull.SVGAConverter_FL

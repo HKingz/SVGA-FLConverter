@@ -26,18 +26,14 @@ var startConvert = function (paths) {
     for (fileURI in files) {
         fl.trace(fileURI = inFolder + '/' + files[fileURI]);
 
-        var doc;
+        var doc = fl.openDocument(fileURI);
 
-        // is canvas project or published js already exists
-        if (fileURI.indexOf('_Canvas.fla') >= 0 || FLfile.exists(fileURI.slice(0, -4) + '_Canvas.js')) continue;
-
-        // not canvas project
         if (fileURI.indexOf('_Canvas.fla') < 0) {
-            //canvas project exists, don't convert, just open canvas project
+
             if (FLfile.exists(fileURI.slice(0, -4) + '_Canvas.fla'))
                 doc = fl.openDocument(fileURI.slice(0, -4) + '_Canvas.fla');
-            else { // no canvas project, convert
-                doc = fl.openDocument(fileURI);
+            else {
+
                 fl.trace(fl.configURI + 'Commands/Convert to Other Document Formats.jsfl');
 
                 fl.runScript(fl.configURI + 'Commands/Convert to Other Document Formats.jsfl');
@@ -45,50 +41,8 @@ var startConvert = function (paths) {
                 doc = fl.getDocumentDOM();
             }
         }
-       // return aprSourceURI;
+
         doc.importPublishProfile(aprSourceURI);
-
-        // all for sound
-
-        // fl.trace(fileURI = inFolder + '/' + files[fileURI]);
-        //
-        // var lib;
-        // if (doc.library.getSelectedItems().length > 0) {
-        //     lib = doc.library.getSelectedItems();
-        // } else {
-        //     lib = doc.library.items;
-        // }
-        //
-        // var imageFileURL;
-        //
-        // var totalItems = lib.length;
-        // // Iterate through items and save bitmaps and
-        // // audio files to the selected directory.
-        //
-        // for (var i = 0; i < totalItems; i++) {
-        //     var libItem = lib[i];
-        //     if (libItem.itemType == "bitmap" || libItem.itemType == "sound") {
-        //         // Check the audio files original Compression Type if "RAW" export only as a .wav file
-        //         // Any other compression type then export as the libItem's name defines.
-        //         if (libItem.itemType == "sound" && libItem.originalCompressionType == "RAW") {
-        //             wavName = libItem.name.split('.')[0] + '.wav';
-        //
-        //             var folders = wavName.split("/");
-        //
-        //             var folderuri = imageFileURLBase;
-        //             for (var j = 0; j < folders.length - 1; j++) {
-        //                 folderuri = folderuri + '/' + folders[j];
-        //                 FLfile.createFolder(folderuri);
-        //             }
-        //
-        //             imageFileURL = imageFileURLBase + "/" + wavName;
-        //         } else {
-        //             imageFileURL = imageFileURLBase + "/" + libItem.name;
-        //         }
-        //         // var success = libItem.exportToFile(imageFileURL);
-        //         // fl.trace(imageFileURL + ": " + success);
-        //     }
-        // }
 
         doc.publish();
         doc.close(false);

@@ -10,9 +10,8 @@ clone 或 download 仓库
 
 ### windows
 
-* 安装 windows/ZXPInstaller.Setup.exe;
-* 打开安装后的 ZXPInstaller;
-* 将 windows/SVGAConverter_FL.zxp 拖进 ZXPInstaller 安装插件;
+* 解压 windows/SVGAConverter_FL.zip;
+* 双击运行解压后得到的 install.bat 安装插件;
 * 打开 Animate CC 将 **被转换文件** 保存;
 * 选择菜单 > 窗口 > 扩展 > SVGAConverter_FL;
 * 选择 输出路径 > 开始转换 稍等片刻，svga 文件就会生成在您所输出的目录并开始播放;

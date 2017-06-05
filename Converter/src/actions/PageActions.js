@@ -13,27 +13,40 @@ var httpServer;
 
 var CURRENT_SOURCE_PATH;
 var CURRENT_SOURCE_NAME;
-var TEMP_SOURCE_PATH;
+var CURRENT_SOURCT_SUFFIX = '';
+var TEMP_SOURCE_PATH = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), '_WORKINGTEMP_');
 var CURRENT_PROJECT_PATH = csInterface.getSystemPath(SystemPath.APPLICATION);
 
-csInterface.evalScript("getActiveInfo()", function (result) {
+function updateInfo(callback) {
+    csInterface.evalScript("getActiveInfo()", function (result) {
 
-    CURRENT_SOURCE_PATH = nodePath.dirname(result);
-    CURRENT_SOURCE_NAME = nodePath.basename(result, '.fla');
-    TEMP_SOURCE_PATH = nodePath.join(CURRENT_SOURCE_PATH, '_WORKINGTEMP_');
+        CURRENT_SOURCE_PATH = nodePath.dirname(result);
+        CURRENT_SOURCE_NAME = nodePath.basename(result, '.fla');
 
-});
+        if (CURRENT_SOURCE_NAME.indexOf("_Canvas") > 0) {
+
+            var nameArray = CURRENT_SOURCE_NAME.split('_');
+
+            CURRENT_SOURCT_SUFFIX = '_' + nameArray.pop();
+            CURRENT_SOURCE_NAME = nameArray[0];
+        }
+
+        callback();
+    });
+}
 
 function selectPath() {
 
-    var result = window.cep.fs.showSaveDialogEx ("选择保存目录", CURRENT_SOURCE_PATH, ["svga"], CURRENT_SOURCE_NAME + '.svga', '');
+    updateInfo(function () {
+        var result = window.cep.fs.showSaveDialogEx ("选择保存目录", CURRENT_SOURCE_PATH, ["svga"], CURRENT_SOURCE_NAME + '.svga', '');
 
-    if (result.data){
-        outPutPath = result.data;
+        if (result.data){
+            outPutPath = result.data;
 
-        var startConvertBtn = document.getElementById("startConvertBtn");
-        startConvertBtn.disabled = false;
-    }
+            var startConvertBtn = document.getElementById("startConvertBtn");
+            startConvertBtn.disabled = false;
+        }
+    });
 }
 
 function startConvert() {
@@ -78,8 +91,8 @@ function copySourceToTempFolder(callback) {
         fs.mkdir(TEMP_SOURCE_PATH, function () {
 
             // 复制资源到 temp 文件夹
-            fs.readFile(nodePath.join(CURRENT_SOURCE_PATH, CURRENT_SOURCE_NAME + '.fla'), function(err,data){
-                fs.writeFile(nodePath.join(TEMP_SOURCE_PATH, 'tempConvertedFile.fla'),data,function(err){
+            fs.readFile(nodePath.join(CURRENT_SOURCE_PATH, CURRENT_SOURCE_NAME + CURRENT_SOURCT_SUFFIX + '.fla'), function(err,data){
+                fs.writeFile(nodePath.join(TEMP_SOURCE_PATH, 'tempConvertedFile' + CURRENT_SOURCT_SUFFIX + '.fla'),data,function(err){
                     callback();
                 });
             });
@@ -117,6 +130,11 @@ function createHTTPServer() {
         fs.createReadStream(nodePath.join(TEMP_SOURCE_PATH, req.url.split('?')[0])).pipe(res);
     }).listen(port, '127.0.0.1');
 
+    updateiFrame();
+}
+
+// 刷新 iFrame
+function updateiFrame() {
     // 创建 iFrame 标签，转换数据
     var converteriFrame = document.getElementById("ConverterFrame");
     var newiFrame = document.createElement("iframe");
@@ -155,6 +173,9 @@ function getAbsoluURIForPath(path) {
 window.onunload = function()
 {
     httpServer.close();
+
+    // 删除临时文件目录
+    deleteFlider(TEMP_SOURCE_PATH, true, function () {});
 }
 
 // 转换完成回调
@@ -173,6 +194,18 @@ function saveAs(result) {
 
     preview(outPutPath);
     outPutPath = undefined;
+}
+
+// 转换进度回调
+function LoadingPercent(percentage) {
+    // alert(percentage);
+}
+
+// 转换失败回调
+function convertFail() {
+
+    updateiFrame();
+
 }
 
 function selectFile() {
@@ -206,15 +239,24 @@ function previewWithVideoItems(videoItem) {
     var moveX = 0;
     var moveY = 0;
 
-    if (videoItem.videoSize.width > videoItem.videoSize.height){
+    if (videoItem.videoSize.width < 400 && videoItem.videoSize.height < 400){
 
-        scale = (videoItem.videoSize.height / videoItem.videoSize.width);
-        moveY = ((400 - 400 * scale)) / 2;
+        moveX = (400 - videoItem.videoSize.width) / 2;
+        moveY = (400 - videoItem.videoSize.height) / 2;
+
 
     }else{
 
-        scale = (videoItem.videoSize.width / videoItem.videoSize.height);
-        moveX = ((400 - 400 * scale)) / 2;
+        if (videoItem.videoSize.width > videoItem.videoSize.height){
+
+            scale = (videoItem.videoSize.height / videoItem.videoSize.width);
+            moveY = ((400 - 400 * scale)) / 2;
+
+        }else{
+
+            scale = (videoItem.videoSize.width / videoItem.videoSize.height);
+            moveX = ((400 - 400 * scale)) / 2;
+        }
     }
 
     player.setVideoItem(videoItem);
