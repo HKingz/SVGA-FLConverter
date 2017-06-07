@@ -239,7 +239,9 @@ function previewWithVideoItems(videoItem) {
     var moveX = 0;
     var moveY = 0;
 
-    if (videoItem.videoSize.width < 400 && videoItem.videoSize.height < 400){
+    alert(videoItem.videoSize.width + '---' +videoItem.videoSize.height);
+
+    if (videoItem.videoSize.width <= 400 && videoItem.videoSize.height <= 400){
 
         moveX = (400 - videoItem.videoSize.width) / 2;
         moveY = (400 - videoItem.videoSize.height) / 2;
@@ -249,8 +251,7 @@ function previewWithVideoItems(videoItem) {
 
         if (videoItem.videoSize.width > videoItem.videoSize.height){
 
-            scale = (videoItem.videoSize.height / videoItem.videoSize.width);
-            moveY = ((400 - 400 * scale)) / 2;
+            moveY = (400 - (videoItem.videoSize.height / videoItem.videoSize.width) * 400) / 2;
 
         }else{
 

@@ -1,8 +1,8 @@
 
+node_modules/*
+*.swp
+.idea/*
 **/dist
 **/src/sass/_img.scss
 **/lego-lib
 **/img_old
-node_modules/*
-*.swp
-.idea/*

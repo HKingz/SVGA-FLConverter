@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e9ff4ee-bc96-435e-894c-b0c363910533" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Converter/src/assets/SVGA-FLConveter.apr" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/windows/SVGAConverter_FL.zip" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/SVGAConverter_FL.zxp" afterPath="$PROJECT_DIR$/bin/SVGAConverter_FL.zxp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mac/SVGAConverter_FL.zxp" afterPath="$PROJECT_DIR$/mac/SVGAConverter_FL.zxp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/windows/SVGAConverter_FL.zxp" afterPath="$PROJECT_DIR$/windows/SVGAConverter_FL.zxp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build-js.sh" afterPath="$PROJECT_DIR$/build-js.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/install.bat" afterPath="$PROJECT_DIR$/install.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modify.reg" afterPath="$PROJECT_DIR$/modify.reg" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/SVGAConverter_FL.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Converter/src/actions/PageActions.js" afterPath="$PROJECT_DIR$/Converter/src/actions/PageActions.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -41,7 +39,7 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
+            <state relative-caret-position="357">
               <caret line="22" column="39" lean-forward="false" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
               <folding>
                 <element signature="e#110#159#0" expanded="true" />
@@ -53,8 +51,18 @@
       <file leaf-file-name="PageActions.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Converter/src/actions/PageActions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3179">
-              <caret line="187" column="0" lean-forward="false" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
+            <state relative-caret-position="4522">
+              <caret line="266" column="1" lean-forward="false" selection-start-line="266" selection-start-column="1" selection-end-line="266" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -70,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build-js.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="build-js.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build-js.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="646">
-              <caret line="38" column="42" lean-forward="true" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
+              <caret line="38" column="42" lean-forward="false" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -133,17 +141,17 @@
         <option value="$PROJECT_DIR$/src/sass/main.scss" />
         <option value="$PROJECT_DIR$/legoflow.json" />
         <option value="$PROJECT_DIR$/nmm.html" />
-        <option value="$PROJECT_DIR$/Converter/src/actions/PageActions.js" />
         <option value="$PROJECT_DIR$/SVGA-FLConveter.html" />
         <option value="$PROJECT_DIR$/EndLine_apr.html" />
         <option value="$PROJECT_DIR$/EndLine_apr.txt" />
         <option value="$PROJECT_DIR$/shell.js" />
         <option value="$PROJECT_DIR$/../Untitled.html" />
         <option value="$PROJECT_DIR$/mains.js" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/js/main.js" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/build-js.sh" />
+        <option value="$PROJECT_DIR$/Converter/src/actions/PageActions.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -154,10 +162,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="2520" />
-    <option name="y" value="-476" />
-    <option name="width" value="1080" />
-    <option name="height" value="1916" />
+    <option name="width" value="1440" />
+    <option name="height" value="896" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -177,6 +183,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -191,8 +199,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -346,12 +352,16 @@
       <workItem from="1496754388701" duration="3000" />
       <workItem from="1496819186686" duration="605000" />
       <workItem from="1496820560200" duration="559000" />
-      <workItem from="1496821332465" duration="363000" />
+      <workItem from="1496821332465" duration="514000" />
+      <workItem from="1496826847902" duration="166000" />
+      <workItem from="1496831143234" duration="35000" />
+      <workItem from="1496831289259" duration="37000" />
+      <workItem from="1496831432740" duration="16000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40466000" />
+    <option name="totallyTimeSpent" value="40871000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -363,9 +373,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2520" y="-476" width="1080" height="1916" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="896" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34100878" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34079602" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294956" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -394,16 +404,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="39" lean-forward="false" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
-          <folding>
-            <element signature="e#110#159#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Converter/src/actions/PageActions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3179">
@@ -801,7 +801,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
+        <state relative-caret-position="357">
           <caret line="22" column="39" lean-forward="false" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
           <folding>
             <element signature="e#110#159#0" expanded="true" />
@@ -809,18 +809,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Converter/src/actions/PageActions.js">
+    <entry file="file://$PROJECT_DIR$/build-js.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3179">
-          <caret line="187" column="0" lean-forward="false" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
+        <state relative-caret-position="646">
+          <caret line="38" column="42" lean-forward="false" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build-js.sh">
+    <entry file="file://$PROJECT_DIR$/Converter/src/actions/PageActions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="42" lean-forward="true" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
+        <state relative-caret-position="4522">
+          <caret line="266" column="1" lean-forward="false" selection-start-line="266" selection-start-column="1" selection-end-line="266" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>
