@@ -25,8 +25,13 @@ cp -f ../bin/SVGAConverter_FL.zxp ../windows
 
 cd ../windows/
 mkdir ./SVGAConverter_FL
-cp -f ../install.bat ./SVGAConverter_FL
-cp -f ../modify.reg ./SVGAConverter_FL
+mkdir ./SVGAConverter_FL/others
+
+cp -f ../install.exe ./SVGAConverter_FL
+cp -f ../install.bat ./SVGAConverter_FL/others
+cp -f ../modify.reg ./SVGAConverter_FL/others
+cp -f ../IMSLib.dll ./SVGAConverter_FL/others
+
 unzip -o -d ./SVGAConverter_FL/sources/ ./SVGAConverter_FL.zxp
 zip -r ./SVGAConverter_FL.zip ./SVGAConverter_FL/*
 

@@ -1,6 +1,4 @@
-echo Begin Install...
-
-regedit /s ./modify.reg
+regedit /s ./others\modify.reg
 
 del /s/q "C:\Program Files\Common Files\Adobe\CEP\extensions\com.errnull.SVGAConverter_FL"
 
@@ -14,8 +12,3 @@ del /s/q "C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\com.errnull.S
 mkdir "C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\com.errnull.SVGAConverter_FL"
 
 xcopy/s/q .\sources\*  "C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\com.errnull.SVGAConverter_FL"
-
-
-echo Installation successful
-
-pause
