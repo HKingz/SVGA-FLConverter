@@ -10,7 +10,7 @@ Use LegoFlow bee（0.1.76 And above）construction projects
 
 ### windows
 
-* Unzip windows/SVGAConverter_FL.zip;
+* Unzip windows / SVGAConverter_FL.zip;
 * Running **install.exe** -> **Install Now** ;
 * Open your Animate CC and save your project which will be converted;
 * Select the **SVGA-FLConverter** extension on Window > Extensions > SVGAConverter_FL;
@@ -54,7 +54,7 @@ clone 或 download 仓库
 
 ### windows
 
-* 解压 windows/SVGAConverter_FL.zip;
+* 解压 windows / SVGAConverter_FL.zip;
 * 运行解压后得到的 install.exe -> Install Now 完成安装;
 * 打开 Animate CC 将 **被转换文件** 保存;
 * 选择菜单 > 窗口 > 扩展 > SVGAConverter_FL;
