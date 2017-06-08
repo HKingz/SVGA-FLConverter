@@ -2,6 +2,7 @@ var csInterface = new CSInterface();
 var fs = require('fs');
 var nodePath = require("path");
 var spawn = require("child_process");
+var request = require('request');
 
 var outPutPath;
 var inputPath;
@@ -85,7 +86,7 @@ function startConvert() {
 function copySourceToTempFolder(callback) {
 
     // 删除临时文件目录
-    deleteFlider(TEMP_SOURCE_PATH, true, function () {
+    deleteFlider(TEMP_SOURCE_PATH, true, true, function () {
 
         // 创建 temp 文件夹
         fs.mkdir(TEMP_SOURCE_PATH, function () {
@@ -100,19 +101,21 @@ function copySourceToTempFolder(callback) {
     });
 }
 
-function deleteFlider(path, isFirstFolder, callback) {
+function deleteFlider(path, isFirstFolder, delFirstFolder, callback) {
 
     if(fs.existsSync(path)) {
         fs.readdirSync(path).forEach(function (file) {
 
             var curPath = nodePath.join(path, file);
             if(fs.statSync(curPath).isDirectory()) { // recurse
-                deleteFlider(curPath, false);
+                deleteFlider(curPath, false, true);
             } else { // delete file
                 fs.unlinkSync(curPath);
             }
         });
-        fs.rmdirSync(path);
+        if (!isFirstFolder || delFirstFolder) {
+            fs.rmdirSync(path);
+        }
     }
     if (isFirstFolder){
         callback();
@@ -175,7 +178,7 @@ window.onunload = function()
     httpServer.close();
 
     // 删除临时文件目录
-    deleteFlider(TEMP_SOURCE_PATH, true, function () {});
+    deleteFlider(TEMP_SOURCE_PATH, true, true, function () {});
 }
 
 // 转换完成回调
@@ -190,7 +193,7 @@ function saveAs(result) {
     window.cep.fs.writeFile (outPutPath, result, "Base64");
 
     // 删除 temp 目录
-    deleteFlider(TEMP_SOURCE_PATH, true, function () {});
+    deleteFlider(TEMP_SOURCE_PATH, true, true, function () {});
 
     preview(outPutPath);
     outPutPath = undefined;

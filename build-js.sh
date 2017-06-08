@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 
+rm -rf ./updateInfo
+
+varv=v
+dated=$(date +%Y%m%d%H%M)
+updateInfo=${varv}${dated}
+
+echo "$updateInfo" >> updateInfo
+
 rm -rf ./bin/com.errnull.SVGAConverter_FL
 
 mkdir ./bin/com.errnull.SVGAConverter_FL
 
 cp -r ./Converter/ ./bin/com.errnull.SVGAConverter_FL
+cp -f ./updateInfo ./bin/com.errnull.SVGAConverter_FL
 
 cat ./Conveter_apr.txt ./dist/js/main.js ./EndLine_apr.txt> ./SVGA-FLConveter.html
 
