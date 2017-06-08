@@ -1,5 +1,49 @@
 # SVGA-FLConverter
 
+Animate CC plugin for converting animations to SVGA source file.
+
+## Installation
+
+Clone or Download the [respositories](https://github.com/yyued/SVGA-FLConverter.git)<br>
+Use LegoFlow bee（0.1.76 And above）construction projects
+
+
+### windows
+
+* Unzip windows/SVGAConverter_FL.zip;
+* Running **install.exe** -> **Install Now** ;
+* Open your Animate CC and save your project which will be converted;
+* Select the **SVGA-FLConverter** extension on Window > Extensions > SVGAConverter_FL;
+* Select 输出路径 > 开始转换 
+* Wait a moment, SVGA source file Will be generated in the directory you choose;
+* You can click 选择播放文件 to selete the local SVGA for preview;
+* Use the Right Button to start / pause the preview.
+
+### mac 
+* Install mac / ZXPInstaller.dmg;
+* Run ZXPInstaller;
+* Drag mac/SVGAConverter.zxp to ZXPInstaller for installation;
+* Select the **SVGA-FLConverter** extension on Window > Extensions > SVGAConverter_FL;
+* Select 输出路径 > 开始转换 
+* Wait a moment, the SVGA source file Will be generated in the directory you choose;
+* You can click 选择播放文件 to selete the local SVGA for preview;
+* Use the Right Button to start / pause the preview.
+
+## SVGA File Test
+
+To test whether the SVGA source file is working properly：
+1. Use the button 选择播放文件 to selete the local SVGA for preview;
+2. Open http://legox.yy.com/svga/svgaplayer/, Drag a SVGA source file or select a file for preview。
+
+
+
+```
+---------------- 中英文分割线 ------------------
+```
+
+
+# SVGA-FLConverter
+
 本工具适用于 Animate CC 系列，使用本工具可以将 FLA 文件转换为 SVGA 文件。
 
 ## 用法
