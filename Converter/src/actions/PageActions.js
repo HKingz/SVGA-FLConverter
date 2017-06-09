@@ -3,6 +3,7 @@ var fs = require('fs');
 var nodePath = require("path");
 var spawn = require("child_process");
 var request = require('request');
+var unzip = require("unzip");
 
 var outPutPath;
 var inputPath;
@@ -248,10 +249,8 @@ function previewWithVideoItems(videoItem) {
     var moveX = 0;
     var moveY = 0;
 
+    alert(videoItem.videoSize.width + '------' + videoItem.videoSize.height);
     if (videoItem.videoSize.width <= 400 && videoItem.videoSize.height <= 400){
-
-        moveX = (400 - videoItem.videoSize.width) / 2;
-        moveY = (400 - videoItem.videoSize.height) / 2;
 
 
     }else{

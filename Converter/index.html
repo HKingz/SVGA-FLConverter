@@ -106,31 +106,19 @@
             downloadFile(zxpUrl,zxpFile,function () {
 
                 deleteFlider(CURRENT_PROJECT_PATH, true, false ,function () {
-
-                    fs.readFile(zxpFile, function (err, data) {
+                    if (csInterface.getOSInformation().indexOf("Mac") >= 0) {
+                        var program = "unzip -o -d " + CURRENT_PROJECT_PATH.replace('Application ', 'Application\\ ') + " " + zxpFile;
+                        spawn.exec(program, function () {
+                            alert("更新完成，即将重启。");
+                            fs.unlinkSync(zxpFile);
+                            csInterface.closeExtension();
+                        });
+                    }else{
+                        fs.createReadStream(zxpFile).pipe(unzip.Extract({ path: CURRENT_PROJECT_PATH}));
+                        alert("更新完成，即将重启。");
                         fs.unlinkSync(zxpFile);
-                        var new_zip = new JSZip();
-                        new_zip.loadAsync(data)
-                            .then(function(zip) {
-                                zip.forEach(function (relativePath, file){
-
-                                    if (file.dir){
-
-                                        fs.mkdirSync(nodePath.join(CURRENT_PROJECT_PATH, relativePath), 0777);
-
-                                    }else{
-
-                                        zip.files[file.name].async('Base64').then(function (fileData) {
-
-                                            fs.writeFileSync(nodePath.join(CURRENT_PROJECT_PATH, relativePath), fileData, 'Base64');
-                                        });
-                                    }
-                                });
-
-                                alert("更新完成，即将重启。");
-                                csInterface.closeExtension();
-                            });
-                    });
+                        csInterface.closeExtension();
+                    }
                 });
             });
         }
@@ -169,5 +157,7 @@
 
 </body>
 </html>
+
+
 
 
