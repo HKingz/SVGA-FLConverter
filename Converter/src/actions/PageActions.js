@@ -202,6 +202,12 @@ function saveAs(result) {
 // 转换进度回调
 function LoadingPercent(percentage) {
     // alert(percentage);
+    var oBox = document.getElementById("box");
+    oBox.innerHTML = '转换进度：' +  percentage.toString();
+
+    if (percentage == 100){
+        oBox.innerHTML = '';
+    }
 }
 
 // 转换失败回调
