@@ -11,6 +11,7 @@
     <script src="./src/assets/pngquant.min.js"></script>
     <script src="./src/assets/jszip.min.js"></script>
     <script src="./src/assets/svga.min.js"></script>
+    <script src="./src/assets/jquery.min.js"></script>
 
     <title>SVGAConverter</title>
 </head>
@@ -71,7 +72,6 @@
 
         </div>
     </div>
-    <div class="box" id="box"></div>
 </div>
 
 <script type="text/javascript">
@@ -98,8 +98,7 @@
             selectPathBtn.disabled = true;
             var selectFile = document.getElementById("selectFile");
             selectFile.disabled = true;
-            var oBox = document.getElementById("box");
-            oBox.innerHTML = '正在升级中，请稍等。。。';
+            $("button#selectFile").text('正在更新中。。。');
 
             var zxpUrl = "https://raw.githubusercontent.com/yyued/SVGA-FLConverter/master/bin/SVGAConverter_FL.zxp";
             var zxpFile = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), 'updateFL.zxp');

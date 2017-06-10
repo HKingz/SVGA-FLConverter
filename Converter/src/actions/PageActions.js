@@ -15,6 +15,7 @@ var httpServer;
 
 var CURRENT_SOURCE_PATH;
 var CURRENT_SOURCE_NAME;
+var CURRENT_SOURCE_REALNAME;
 var CURRENT_SOURCT_SUFFIX = '';
 var TEMP_SOURCE_PATH = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), '_WORKINGTEMP_');
 var CURRENT_PROJECT_PATH = csInterface.getSystemPath(SystemPath.APPLICATION);
@@ -22,15 +23,21 @@ var CURRENT_PROJECT_PATH = csInterface.getSystemPath(SystemPath.APPLICATION);
 function updateInfo(callback) {
     csInterface.evalScript("getActiveInfo()", function (result) {
 
-        CURRENT_SOURCE_PATH = nodePath.dirname(result);
-        CURRENT_SOURCE_NAME = nodePath.basename(result, '.fla');
+        var infoArr = result.split('_and_');
+        var sourceType = infoArr.pop();
+        var sourcePath = infoArr[0];
 
-        if (CURRENT_SOURCE_NAME.indexOf("_Canvas") > 0) {
+        CURRENT_SOURCE_PATH = nodePath.dirname(sourcePath);
+        CURRENT_SOURCE_REALNAME = nodePath.basename(sourcePath, '.fla');
 
-            var nameArray = CURRENT_SOURCE_NAME.split('_');
+        if (sourceType == 'htmlcanvas') {
 
-            CURRENT_SOURCT_SUFFIX = '_' + nameArray.pop();
+            var nameArray = CURRENT_SOURCE_REALNAME.split('_');
+
+            CURRENT_SOURCT_SUFFIX = '_Canvas';
             CURRENT_SOURCE_NAME = nameArray[0];
+        }else{
+            CURRENT_SOURCE_NAME = CURRENT_SOURCE_REALNAME;
         }
 
         callback();
@@ -93,7 +100,7 @@ function copySourceToTempFolder(callback) {
         fs.mkdir(TEMP_SOURCE_PATH, function () {
 
             // 复制资源到 temp 文件夹
-            fs.readFile(nodePath.join(CURRENT_SOURCE_PATH, CURRENT_SOURCE_NAME + CURRENT_SOURCT_SUFFIX + '.fla'), function(err,data){
+            fs.readFile(nodePath.join(CURRENT_SOURCE_PATH, CURRENT_SOURCE_REALNAME + '.fla'), function(err,data){
                 fs.writeFile(nodePath.join(TEMP_SOURCE_PATH, 'tempConvertedFile' + CURRENT_SOURCT_SUFFIX + '.fla'),data,function(err){
                     callback();
                 });
@@ -131,6 +138,7 @@ function createHTTPServer() {
     httpServer = http.createServer(function (req, res)
     {
         // CURRENT_SOURCE_PATH + req.url.split('?')[0]
+        
         fs.createReadStream(nodePath.join(TEMP_SOURCE_PATH, req.url.split('?')[0])).pipe(res);
     }).listen(port, '127.0.0.1');
 
@@ -202,13 +210,21 @@ function saveAs(result) {
 
 // 转换进度回调
 function LoadingPercent(percentage) {
-    // alert(percentage);
-    var oBox = document.getElementById("box");
-    oBox.innerHTML = '转换进度：' +  percentage.toString();
+
+    if(!document.getElementById("selectFile").disabled){
+        document.getElementById("selectFile").disabled = true;
+    }
 
     if (percentage == 100){
-        oBox.innerHTML = '';
+        $("button#selectFile").text('选择播放文件');
+        document.getElementById("selectFile").disabled = false;
+
+    }else{
+        $("button#selectFile").text('转换进度：' +  percentage.toString() + ' %');
     }
+
+
+
 }
 
 // 转换失败回调
