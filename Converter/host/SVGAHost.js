@@ -38,9 +38,6 @@ var startConvert = function (paths) {
 
         if (doc.type == 'Flash') {
 
-            fl.trace(asssetURI + 'ConvertToCanvasDocument.jsfl');
-
-            fl.runScript(asssetURI + 'ConvertToCanvasDocument.jsfl');
             fl.runScript(asssetURI + 'ConvertToCanvasDocument.jsfl', "startConvertCanvas", currentTempFoldURI);
 
             doc.close(false);
