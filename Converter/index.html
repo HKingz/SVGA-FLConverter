@@ -92,23 +92,26 @@
 
         if (currentVersion < newestVersion) {
 
-            alert("主人，现在有更新的版本了哦，更新一下？");
+            alertMessages("主人，现在有更新的版本了哦，更新一下？");
 
             var selectPathBtn = document.getElementById("selectPathBtn");
             selectPathBtn.disabled = true;
             var selectFile = document.getElementById("selectFile");
             selectFile.disabled = true;
-            $("button#selectFile").text('正在更新中。。。');
+            $("button#selectFile").text('正在下载更新。。。');
 
             var zxpUrl = "https://raw.githubusercontent.com/yyued/SVGA-FLConverter/master/bin/SVGAConverter_FL.zxp";
             var zxpFile = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), 'updateFL.zxp');
             downloadFile(zxpUrl,zxpFile,function () {
 
+                $("button#selectFile").text('正在安装更新。。。');
                 deleteFlider(CURRENT_PROJECT_PATH, true, false ,function () {
                     if (csInterface.getOSInformation().indexOf("Mac") >= 0) {
                         var program = "unzip -o -d " + CURRENT_PROJECT_PATH.replace('Application ', 'Application\\ ') + " " + zxpFile;
                         spawn.exec(program, function () {
-                            alert("更新完成，即将重启。");
+
+                            alertMessages("更新完成，即将重启。");
+
                             fs.unlinkSync(zxpFile);
                             csInterface.closeExtension()
                         });
@@ -132,7 +135,7 @@
                                             });
                                         }
                                     });
-                                    alert("更新完成，即将重启。");
+                                    alertMessages("更新完成，即将重启。");
                                     // fs.unlinkSync(zxpFile);
                                     csInterface.closeExtension();
                                 });

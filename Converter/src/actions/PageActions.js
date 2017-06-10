@@ -20,6 +20,10 @@ var CURRENT_SOURCT_SUFFIX = '';
 var TEMP_SOURCE_PATH = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), '_WORKINGTEMP_');
 var CURRENT_PROJECT_PATH = csInterface.getSystemPath(SystemPath.APPLICATION);
 
+function alertMessages(message) {
+    csInterface.evalScript("alertMessage('" + message + "');");
+}
+
 function updateInfo(callback) {
     csInterface.evalScript("getActiveInfo()", function (result) {
 
@@ -61,7 +65,8 @@ function selectPath() {
 function startConvert() {
 
     if(outPutPath == null || outPutPath == undefined || outPutPath == ''){
-        alert("请先选择输出路径...");
+
+        alertMessages("请先选择输出路径...");
 
     }else {
 
@@ -70,7 +75,7 @@ function startConvert() {
             var startConvertBtn = document.getElementById("startConvertBtn");
             startConvertBtn.disabled = true;
 
-            csInterface.evalScript("startConvert('"+ getAbsoluURIForPath(TEMP_SOURCE_PATH) + '_and_' + getAbsoluURIForPath(nodePath.join(CURRENT_PROJECT_PATH, 'src', 'assets', 'SVGA-FLConveter.apr'))  +"');", function (res) {
+            csInterface.evalScript("startConvert('" + getAbsoluURIForPath(TEMP_SOURCE_PATH) + '_and_' + getAbsoluURIForPath(nodePath.join(CURRENT_PROJECT_PATH, 'src', 'assets') + nodePath.sep) + '_and_' + getAbsoluURIForPath(nodePath.join(TEMP_SOURCE_PATH, 'tempConvertedFile_Canvas.fla')) + "');", function () {
 
                 var files = fs.readdirSync(nodePath.join(TEMP_SOURCE_PATH, 'images'));
 

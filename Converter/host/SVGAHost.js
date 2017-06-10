@@ -1,3 +1,7 @@
+var alertMessage = function (message) {
+    alert(message);
+}
+
 
 var getActiveInfo = function () {
 
@@ -17,7 +21,9 @@ var startConvert = function (paths) {
 
     var pathsArr = paths.split('_and_');
 
-    var aprSourceURI = pathsArr.pop();
+    var currentTempFoldURI = pathsArr.pop();
+
+    var asssetURI = pathsArr.pop();
 
     var inFolder = pathsArr[0];
 
@@ -32,14 +38,16 @@ var startConvert = function (paths) {
 
         if (doc.type == 'Flash') {
 
-            fl.trace(fl.configURI + 'Commands/Convert to Other Document Formats.jsfl');
+            fl.trace(asssetURI + 'ConvertToCanvasDocument.jsfl');
 
-            fl.runScript(fl.configURI + 'Commands/Convert to Other Document Formats.jsfl');
+            fl.runScript(asssetURI + 'ConvertToCanvasDocument.jsfl');
+            fl.runScript(asssetURI + 'ConvertToCanvasDocument.jsfl', "startConvertCanvas", currentTempFoldURI);
+
             doc.close(false);
             doc = fl.getDocumentDOM();
         }
 
-        doc.importPublishProfile(aprSourceURI);
+        doc.importPublishProfile(asssetURI + 'SVGA-FLConveter.apr');
 
         doc.publish();
         doc.close(false);
