@@ -4,9 +4,7 @@ Animate CC plugin for converting animations to SVGA source file.
 
 ## Installation
 
-Clone or Download the [respositories](https://github.com/yyued/SVGA-FLConverter.git)<br>
-Use LegoFlow bee（0.1.76 And above）construction projects
-
+[Click here Download ZIP](https://github.com/yyued/SVGA-FLConverter/archive/master.zip)
 
 ### windows
 
@@ -48,9 +46,7 @@ To test whether the SVGA source file is working properly：
 
 ## 用法
 
-clone 或 download 仓库
-将项目拖进新版的 LegoFlow bee（0.1.76 以上版本）
-点击构建
+[点此下载压缩包](https://github.com/yyued/SVGA-FLConverter/archive/master.zip)
 
 ### windows
 
