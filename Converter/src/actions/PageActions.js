@@ -77,19 +77,26 @@ function startConvert() {
 
             csInterface.evalScript("startConvert('" + getAbsoluURIForPath(TEMP_SOURCE_PATH) + '_and_' + getAbsoluURIForPath(nodePath.join(CURRENT_PROJECT_PATH, 'src', 'assets') + nodePath.sep) + '_and_' + getAbsoluURIForPath(nodePath.join(TEMP_SOURCE_PATH, 'tempConvertedFile_Canvas.fla')) + "');", function () {
 
-                var files = fs.readdirSync(nodePath.join(TEMP_SOURCE_PATH, 'images'));
 
-                // 将资源图片全部压缩
-                files.forEach(function (file, index) {
 
-                    var imgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', file);
-                    var outImgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', encodeURIComponent(file));
-                    var isLastImage = index == (files.length - 1);
+                fs.exists(nodePath.join(TEMP_SOURCE_PATH, 'images'), function(exists) {
 
-                    pngquantImage(imgPath, outImgPath, isLastImage, function () {
+                    if (exists){
+                        var files = fs.readdirSync(nodePath.join(TEMP_SOURCE_PATH, 'images'));
+                        // 将资源图片全部压缩
+                        files.forEach(function (file, index) {
 
+                            var imgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', file);
+                            var outImgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', encodeURIComponent(file));
+                            var isLastImage = index == (files.length - 1);
+
+                            pngquantImage(imgPath, outImgPath, isLastImage, function () {
+                                setTimeout("createHTTPServer()", 500);
+                            });
+                        });
+                    }else {
                         setTimeout("createHTTPServer()", 500);
-                    });
+                    }
                 });
             });
         });
