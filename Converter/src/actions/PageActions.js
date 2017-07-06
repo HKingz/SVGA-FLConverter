@@ -24,6 +24,18 @@ function alertMessages(message) {
     csInterface.evalScript("alertMessage('" + message + "');");
 }
 
+function confirmMessages(message, callbackTrue, callbackFalse) {
+    csInterface.evalScript("confirmMessage('" + message + "');", function (result) {
+
+        if (result == 'true'){
+            callbackTrue();
+
+        }else{
+            callbackFalse();
+        }
+    });
+}
+
 function updateInfo(callback) {
     csInterface.evalScript("getActiveInfo()", function (result) {
 

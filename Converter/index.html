@@ -92,56 +92,58 @@
 
         if (currentVersion < newestVersion) {
 
-            alertMessages("主人，现在有更新的版本了哦，更新一下？");
+            confirmMessages("主人，现在有更新的版本了哦，更新一下? \\n tip: 下载过慢可以到官网下载最新版本安装哦。",function () {
 
-            var selectPathBtn = document.getElementById("selectPathBtn");
-            selectPathBtn.disabled = true;
-            var selectFile = document.getElementById("selectFile");
-            selectFile.disabled = true;
-            $("button#selectFile").text('正在下载更新...');
+                var selectPathBtn = document.getElementById("selectPathBtn");
+                selectPathBtn.disabled = true;
+                var selectFile = document.getElementById("selectFile");
+                selectFile.disabled = true;
+                $("button#selectFile").text('正在下载更新...');
 
-            var zxpUrl = "https://raw.githubusercontent.com/yyued/SVGA-FLConverter/master/bin/SVGAConverter_FL.zxp";
-            var zxpFile = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), 'updateFL.zxp');
-            downloadFile(zxpUrl,zxpFile,function () {
+                var zxpUrl = "https://raw.githubusercontent.com/yyued/SVGA-FLConverter/master/bin/SVGAConverter_FL.zxp";
+                var zxpFile = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), 'updateFL.zxp');
+                downloadFile(zxpUrl,zxpFile,function () {
 
-                $("button#selectFile").text('正在安装更新...');
-                deleteFlider(CURRENT_PROJECT_PATH, true, false ,function () {
-                    if (csInterface.getOSInformation().indexOf("Mac") >= 0) {
-                        var program = "unzip -o -d " + CURRENT_PROJECT_PATH.replace('Application ', 'Application\\ ') + " " + zxpFile;
-                        spawn.exec(program, function () {
+                    $("button#selectFile").text('正在安装更新...');
+                    deleteFlider(CURRENT_PROJECT_PATH, true, false ,function () {
+                        if (csInterface.getOSInformation().indexOf("Mac") >= 0) {
+                            var program = "unzip -o -d " + CURRENT_PROJECT_PATH.replace('Application ', 'Application\\ ') + " " + zxpFile;
+                            spawn.exec(program, function () {
 
-                            alertMessages("更新完成，即将重启。");
+                                alertMessages("更新完成，即将重启。");
 
-                            fs.unlinkSync(zxpFile);
-                            csInterface.closeExtension()
-                        });
-                    }else{
-                        fs.readFile(zxpFile, function (err, data) {
-                            fs.unlinkSync(zxpFile);
-                            var new_zip = new JSZip();
-                            new_zip.loadAsync(data)
-                                .then(function(zip) {
-                                    zip.forEach(function (relativePath, file){
+                                fs.unlinkSync(zxpFile);
+                                csInterface.closeExtension()
+                            });
+                        }else{
+                            fs.readFile(zxpFile, function (err, data) {
+                                fs.unlinkSync(zxpFile);
+                                var new_zip = new JSZip();
+                                new_zip.loadAsync(data)
+                                    .then(function(zip) {
+                                        zip.forEach(function (relativePath, file){
 
-                                        if (file.dir){
+                                            if (file.dir){
 
-                                            fs.mkdirSync(nodePath.join(CURRENT_PROJECT_PATH, relativePath), 0777);
+                                                fs.mkdirSync(nodePath.join(CURRENT_PROJECT_PATH, relativePath), 0777);
 
-                                        }else{
+                                            }else{
 
-                                            zip.files[file.name].async('Base64').then(function (fileData) {
+                                                zip.files[file.name].async('Base64').then(function (fileData) {
 
-                                                fs.writeFileSync(nodePath.join(CURRENT_PROJECT_PATH, relativePath), fileData, 'Base64');
-                                            });
-                                        }
+                                                    fs.writeFileSync(nodePath.join(CURRENT_PROJECT_PATH, relativePath), fileData, 'Base64');
+                                                });
+                                            }
+                                        });
+                                        alertMessages("更新完成，即将重启。");
+                                        // fs.unlinkSync(zxpFile);
+                                        csInterface.closeExtension();
                                     });
-                                    alertMessages("更新完成，即将重启。");
-                                    // fs.unlinkSync(zxpFile);
-                                    csInterface.closeExtension();
-                                });
-                        });
-                    }
+                            });
+                        }
+                    });
                 });
+            }, function () {
             });
         }
     });
