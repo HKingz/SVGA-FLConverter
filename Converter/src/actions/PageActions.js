@@ -177,7 +177,7 @@ function createHTTPServer() {
             fs.createReadStream(nodePath.join(TEMP_SOURCE_PATH, req.url.split('?')[0])).pipe(res);
         }).listen(port, '127.0.0.1');
 
-        CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功创建服务器...';
+        CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功创建服务器 port：' + USEFFULPORT + '...';
         updateiFrame();
     });
 }
