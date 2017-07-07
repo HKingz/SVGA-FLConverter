@@ -22,6 +22,8 @@ var TEMP_SOURCE_PATH = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOC
 var CURRENT_PROJECT_PATH = csInterface.getSystemPath(SystemPath.APPLICATION);
 var USEFFULPORT;
 
+var CONSULEMESSAGE = '请先打开资源文件...';
+
 function alertMessages(message) {
     csInterface.evalScript("alertMessage('" + message + "');");
 }
@@ -65,13 +67,18 @@ function updateInfo(callback) {
 function selectPath() {
 
     updateInfo(function () {
-        var result = window.cep.fs.showSaveDialogEx ("选择保存目录", CURRENT_SOURCE_PATH, ["svga"], CURRENT_SOURCE_NAME + '.svga', '');
 
-        if (result.data){
-            outPutPath = result.data;
+        if (CURRENT_SOURCE_NAME == 'undefined'){
+            alertMessages(CONSULEMESSAGE);
+        }else {
+            var result = window.cep.fs.showSaveDialogEx ("选择保存目录", CURRENT_SOURCE_PATH, ["svga"], CURRENT_SOURCE_NAME + '.svga', '');
 
-            var startConvertBtn = document.getElementById("startConvertBtn");
-            startConvertBtn.disabled = false;
+            if (result.data){
+                outPutPath = result.data;
+
+                var startConvertBtn = document.getElementById("startConvertBtn");
+                startConvertBtn.disabled = false;
+            }
         }
     });
 }
@@ -85,13 +92,11 @@ function startConvert() {
     }else {
 
         copySourceToTempFolder(function () {
-
             var startConvertBtn = document.getElementById("startConvertBtn");
             startConvertBtn.disabled = true;
 
             csInterface.evalScript("startConvert('" + getAbsoluURIForPath(TEMP_SOURCE_PATH) + '_and_' + getAbsoluURIForPath(nodePath.join(CURRENT_PROJECT_PATH, 'src', 'assets') + nodePath.sep) + '_and_' + getAbsoluURIForPath(nodePath.join(TEMP_SOURCE_PATH, 'tempConvertedFile_Canvas.fla')) + "');", function () {
-
-
+                CONSULEMESSAGE = CONSULEMESSAGE + '\\n 发布成功...';
 
                 fs.exists(nodePath.join(TEMP_SOURCE_PATH, 'images'), function(exists) {
 
@@ -99,6 +104,7 @@ function startConvert() {
                         var files = fs.readdirSync(nodePath.join(TEMP_SOURCE_PATH, 'images'));
                         // 将资源图片全部压缩
                         files.forEach(function (file, index) {
+                            CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功压缩图片...' + index;
 
                             var imgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', file);
                             var outImgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', encodeURIComponent(file));
@@ -121,13 +127,16 @@ function copySourceToTempFolder(callback) {
 
     // 删除临时文件目录
     deleteFlider(TEMP_SOURCE_PATH, true, true, function () {
+        CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功清除临时目录...';
 
         // 创建 temp 文件夹
         fs.mkdir(TEMP_SOURCE_PATH, function () {
+            CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功创建临时目录...';
 
             // 复制资源到 temp 文件夹
             fs.readFile(nodePath.join(CURRENT_SOURCE_PATH, CURRENT_SOURCE_REALNAME + '.fla'), function(err,data){
                 fs.writeFile(nodePath.join(TEMP_SOURCE_PATH, 'tempConvertedFile' + CURRENT_SOURCT_SUFFIX + '.fla'),data,function(err){
+                    CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功创建临时资源文件...';
                     callback();
                 });
             });
@@ -168,6 +177,7 @@ function createHTTPServer() {
             fs.createReadStream(nodePath.join(TEMP_SOURCE_PATH, req.url.split('?')[0])).pipe(res);
         }).listen(port, '127.0.0.1');
 
+        CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功创建服务器...';
         updateiFrame();
     });
 }
@@ -186,6 +196,8 @@ function updateiFrame() {
 
     var parent = converteriFrame.parentNode;
     parent.replaceChild(newiFrame, converteriFrame);
+
+    CONSULEMESSAGE = CONSULEMESSAGE + '\\n 开始转换...';
 }
 
 // 获取路径 uri
@@ -219,6 +231,7 @@ window.onunload = function()
 
 // 转换完成回调
 function saveAs(result) {
+    CONSULEMESSAGE = CONSULEMESSAGE + '\\n 转换完成...';
 
     // 完成转换后关闭服务器
     httpServer.close();
@@ -227,11 +240,13 @@ function saveAs(result) {
 
     // 将文件写入本地
     window.cep.fs.writeFile (outPutPath, result, "Base64");
+    CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功写出资源...';
 
     // 删除 temp 目录
     deleteFlider(TEMP_SOURCE_PATH, true, true, function () {});
 
     preview(outPutPath);
+    CONSULEMESSAGE = CONSULEMESSAGE + '\\n 开始播放...';
     outPutPath = undefined;
 }
 
@@ -249,9 +264,6 @@ function LoadingPercent(percentage) {
     }else{
         $("button#selectFile").text('转换进度：' +  percentage.toString() + ' %');
     }
-
-
-
 }
 
 // 转换失败回调
