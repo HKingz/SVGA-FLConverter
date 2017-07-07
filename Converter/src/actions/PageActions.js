@@ -97,26 +97,40 @@ function startConvert() {
 
             csInterface.evalScript("startConvert('" + getAbsoluURIForPath(TEMP_SOURCE_PATH) + '_and_' + getAbsoluURIForPath(nodePath.join(CURRENT_PROJECT_PATH, 'src', 'assets') + nodePath.sep) + '_and_' + getAbsoluURIForPath(nodePath.join(TEMP_SOURCE_PATH, 'tempConvertedFile_Canvas.fla')) + "');", function () {
                 CONSULEMESSAGE = CONSULEMESSAGE + '\\n 发布成功...';
+                // 处理 html
+                var htmlPath = nodePath.join(TEMP_SOURCE_PATH, 'tempConvertedFile_Canvas.html');
 
-                fs.exists(nodePath.join(TEMP_SOURCE_PATH, 'images'), function(exists) {
+                fs.readFile(htmlPath, function (err, data) {
 
-                    if (exists){
-                        var files = fs.readdirSync(nodePath.join(TEMP_SOURCE_PATH, 'images'));
-                        // 将资源图片全部压缩
-                        files.forEach(function (file, index) {
-                            CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功压缩图片...' + index;
+                    var htmlString = data.toString();
+                    if(htmlString.indexOf("})(createjs = createjs||{}, AdobeAn = AdobeAn||{});") > 0 ) {
 
-                            var imgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', file);
-                            var outImgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', encodeURIComponent(file));
-                            var isLastImage = index == (files.length - 1);
-
-                            pngquantImage(imgPath, outImgPath, isLastImage, function () {
-                                setTimeout("createHTTPServer()", 500);
-                            });
-                        });
-                    }else {
-                        setTimeout("createHTTPServer()", 500);
+                        htmlString.replace("})(createjs = createjs||{}, AdobeAn = AdobeAn||{});", "window.lib = lib; window.ss=ss; window.img=img;})(createjs = createjs||{}, AdobeAn = AdobeAn||{});");
                     }
+
+                    fs.writeFile(htmlPath, htmlString, function (err) {
+                        // 处理图片
+                        fs.exists(nodePath.join(TEMP_SOURCE_PATH, 'images'), function(exists) {
+
+                            if (exists){
+                                var files = fs.readdirSync(nodePath.join(TEMP_SOURCE_PATH, 'images'));
+                                // 将资源图片全部压缩
+                                files.forEach(function (file, index) {
+                                    CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功压缩图片...' + index;
+
+                                    var imgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', file);
+                                    var outImgPath = nodePath.join(TEMP_SOURCE_PATH, 'images', encodeURIComponent(file));
+                                    var isLastImage = index == (files.length - 1);
+
+                                    pngquantImage(imgPath, outImgPath, isLastImage, function () {
+                                        setTimeout("createHTTPServer()", 500);
+                                    });
+                                });
+                            }else {
+                                setTimeout("createHTTPServer()", 500);
+                            }
+                        });
+                    });
                 });
             });
         });
