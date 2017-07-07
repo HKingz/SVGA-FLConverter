@@ -4,6 +4,7 @@ var nodePath = require("path");
 var spawn = require("child_process");
 var request = require('request');
 var unzip = require("unzip");
+var portfinder = require('portfinder');
 
 var outPutPath;
 var inputPath;
@@ -19,6 +20,7 @@ var CURRENT_SOURCE_REALNAME;
 var CURRENT_SOURCT_SUFFIX = '';
 var TEMP_SOURCE_PATH = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), '_WORKINGTEMP_');
 var CURRENT_PROJECT_PATH = csInterface.getSystemPath(SystemPath.APPLICATION);
+var USEFFULPORT;
 
 function alertMessages(message) {
     csInterface.evalScript("alertMessage('" + message + "');");
@@ -156,17 +158,18 @@ function deleteFlider(path, isFirstFolder, delFirstFolder, callback) {
 
 function createHTTPServer() {
 
-    var port = 10045;
+    portfinder.getPort(function (err, port) {
+        USEFFULPORT = port;
+        var http = require('http');
+        httpServer = http.createServer(function (req, res)
+        {
+            // CURRENT_SOURCE_PATH + req.url.split('?')[0]
 
-    var http = require('http');
-    httpServer = http.createServer(function (req, res)
-    {
-        // CURRENT_SOURCE_PATH + req.url.split('?')[0]
-        
-        fs.createReadStream(nodePath.join(TEMP_SOURCE_PATH, req.url.split('?')[0])).pipe(res);
-    }).listen(port, '127.0.0.1');
+            fs.createReadStream(nodePath.join(TEMP_SOURCE_PATH, req.url.split('?')[0])).pipe(res);
+        }).listen(port, '127.0.0.1');
 
-    updateiFrame();
+        updateiFrame();
+    });
 }
 
 // 刷新 iFrame
@@ -176,7 +179,7 @@ function updateiFrame() {
     var newiFrame = document.createElement("iframe");
 
     newiFrame.setAttribute('id', 'ConverterFrame');
-    newiFrame.setAttribute('src', 'http://127.0.0.1:10045/tempConvertedFile_Canvas.html');
+    newiFrame.setAttribute('src', 'http://127.0.0.1:' + USEFFULPORT + '/tempConvertedFile_Canvas.html');
     newiFrame.setAttribute('width', '0');
     newiFrame.setAttribute('height', '0');
     newiFrame.style.display = 'none';
