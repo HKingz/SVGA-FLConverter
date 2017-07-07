@@ -18,9 +18,8 @@ Animate CC plugin for converting animations to SVGA source file.
 * Use the Right Button to start / pause the preview.
 
 ### mac 
-* Install mac / ZXPInstaller.dmg;
-* Run ZXPInstaller;
-* Drag mac/SVGAConverter.zxp to ZXPInstaller for installation;
+* Download、install and run [ZXP Installer](http://updates.aescripts.com/zxp-installer/mac/update-mac.zip);
+* Select Menu > File > Open, select the converter installer downloaded;
 * Select the **SVGA-FLConverter** extension on Window > Extensions > SVGAConverter_FL;
 * Select 输出路径 > 开始转换 
 * Wait a moment, the SVGA source file Will be generated in the directory you choose;
