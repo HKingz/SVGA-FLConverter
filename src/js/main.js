@@ -63,8 +63,8 @@ var onConverted = function (blob) {
     }
 }
 
-handleComplete = function (event) {
-    originalHandleComplete(event);
+handleComplete = function (event, comp) {
+    originalHandleComplete(event, comp);
     if (60 % lib.properties.fps > 0) {
         alert("FPS 只能是 60 的约数，如 [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]，当前 FPS = " + lib.properties.fps + "，请修改后再执行导出操作。");
         document.querySelector('#canvas').style.opacity = 0.0;

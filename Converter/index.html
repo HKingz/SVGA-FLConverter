@@ -122,7 +122,7 @@
 
                             downloadFile(zipToolUrl, zipToolFile, function () {
 
-                                var program = "\"" + nodePath.join(CURRENT_PROJECT_PATH, "src", "assets", "unzip.exe") + "\" " + zxpFile + " -d " + "\"" + CURRENT_PROJECT_PATH + "\"";
+                                var program = zipToolFile + " " + zxpFile + " -d " + "\"" + CURRENT_PROJECT_PATH + "\"";
                                 spawn.exec(program, function () {
 
                                     alertMessages("更新完成，即将重启。");
