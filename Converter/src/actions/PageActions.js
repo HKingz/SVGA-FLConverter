@@ -104,7 +104,7 @@ function startConvert() {
                     var htmlString = data.toString();
                     if(htmlString.indexOf("})(createjs = createjs||{}, AdobeAn = AdobeAn||{});") > 0 ) {
 
-                        htmlString.replace("})(createjs = createjs||{}, AdobeAn = AdobeAn||{});", "window.lib = lib; window.ss=ss; window.img=img;})(createjs = createjs||{}, AdobeAn = AdobeAn||{});");
+                        htmlString = htmlString.replace("})(createjs = createjs||{}, AdobeAn = AdobeAn||{});", "window.lib = lib; window.ss=ss; window.img=img;})(createjs = createjs||{}, AdobeAn = AdobeAn||{});");
                     }
 
                     fs.writeFile(htmlPath, htmlString, function (err) {
