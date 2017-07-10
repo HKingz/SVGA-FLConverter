@@ -3,7 +3,6 @@ var fs = require('fs');
 var nodePath = require("path");
 var spawn = require("child_process");
 var request = require('request');
-var unzip = require("unzip");
 var portfinder = require('portfinder');
 
 var outPutPath;

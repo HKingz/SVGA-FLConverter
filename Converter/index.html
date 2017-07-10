@@ -116,28 +116,22 @@
                                 csInterface.closeExtension()
                             });
                         }else{
-                            fs.readFile(zxpFile, function (err, data) {
-                                var new_zip = new JSZip();
-                                new_zip.loadAsync(data)
-                                    .then(function(zip) {
-                                        zip.forEach(function (relativePath, file){
 
-                                            if (file.dir){
+                            var zipToolUrl = "https://raw.githubusercontent.com/yyued/SVGA-FLConverter/master/zip.exe";
+                            var zipToolFile = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), 'zip.exe');
 
-                                                fs.mkdirSync(nodePath.join(CURRENT_PROJECT_PATH, relativePath), 0777);
+                            downloadFile(zipToolUrl, zipToolFile, function () {
 
-                                            }else{
+                                var program = "\"" + nodePath.join(CURRENT_PROJECT_PATH, "src", "assets", "unzip.exe") + "\" " + zxpFile + " -d " + "\"" + CURRENT_PROJECT_PATH + "\"";
+                                spawn.exec(program, function () {
 
-                                                zip.files[file.name].async('Base64').then(function (fileData) {
+                                    alertMessages("更新完成，即将重启。");
 
-                                                    fs.writeFileSync(nodePath.join(CURRENT_PROJECT_PATH, relativePath), fileData, 'Base64');
-                                                });
-                                            }
-                                        });
-                                        fs.unlinkSync(zxpFile);
-                                        alertMessages("更新完成，即将重启。");
-                                        csInterface.closeExtension();
-                                    });
+                                    fs.unlinkSync(zxpFile);
+                                    fs.unlinkSync(zipToolFile);
+                                    csInterface.closeExtension()
+                                });
+
                             });
                         }
                     });
