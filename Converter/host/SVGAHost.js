@@ -42,6 +42,7 @@ var startConvert = function (paths) {
         if (doc.type == 'Flash') {
 
             fl.runScript(asssetURI + 'ConvertToCanvasDocument.jsfl', "startConvertCanvas", currentTempFoldURI);
+            fl.runScript(asssetURI + 'CherkForPureColorVectorgraph.jsfl', 'CherkForPureColorVectorgraph');
 
             doc.close(false);
             doc = fl.getDocumentDOM();
