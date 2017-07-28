@@ -27,8 +27,8 @@ function CherkForPureColorVectorgraphWithTimeline(timeline) {
                         doc.selectNone();
                         doc.selection = [curElement];
 
-                        doc.convertSelectionToBitmap();
-                        fl.trace(fillStyle + "get...");
+                        var flag = doc.convertSelectionToBitmap();
+                        fl.trace(flag + "----" + fillStyle + "get...");
                     }
                 }
             }

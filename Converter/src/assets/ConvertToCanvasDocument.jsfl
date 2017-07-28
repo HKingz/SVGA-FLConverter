@@ -51,17 +51,11 @@ function scanTimeline(tl) {
 						}
 						var modified_ac = toPasteArray.join("\n");
 						frames[j].frame.actionScript = ac + "\n" + modified_ac;
-
 					}
-
 				}
-
 			}
-
 		}
-
 	}
-
 }
 
 function convertAS(dom) {
