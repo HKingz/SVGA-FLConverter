@@ -14,7 +14,13 @@ module.exports = class SVGAWriter {
         let resourceHelper = new SVGAResourceHelper(this.timeline._resources);
         resourceHelper.copyToZIP(zip, (result) => {
             this.resources = result;
-            zip.file("movie.spec", JSON.stringify(this.createSpec()));
+            let spec = this.createSpec();;
+            let specBuf = new Buffer(SVGAProtoHelper_1_5_0.convertToProto(spec));
+
+            this.resources = result;
+            zip.file("movie.spec", JSON.stringify(spec));            
+            zip.file("movie.binary", specBuf);
+            
             zip.generateAsync({ type: "blob", compression: "DEFLATE" }).then((blob) => {
                 callback(blob);
                 document.querySelector('.downloadButton').onclick = () => {
@@ -103,5 +109,4 @@ module.exports = class SVGAWriter {
         }
         return spec;
     }
-
 }
