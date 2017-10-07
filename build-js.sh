@@ -15,7 +15,7 @@ mkdir ./bin/com.errnull.SVGAConverter_FL
 cp -r ./Converter/ ./bin/com.errnull.SVGAConverter_FL
 cp -f ./updateInfo ./bin/com.errnull.SVGAConverter_FL
 
-cat ./Conveter_apr.txt ./dist/js/main.js ./EndLine_apr.txt> ./SVGA-FLConveter.html
+cat ./Conveter_apr.txt ./dist/js/main.js ./svga_protohelper.js ./EndLine_apr.txt> ./SVGA-FLConveter.html
 
 ./encode SVGA-FLConveter.html
 

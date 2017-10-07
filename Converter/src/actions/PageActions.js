@@ -252,7 +252,8 @@ function saveAs(result) {
     converteriFrame.setAttribute('src', '#');
 
     // 将文件写入本地
-    window.cep.fs.writeFile (outPutPath, result, "Base64");
+    // window.cep.fs.writeFile (outPutPath, result, "Base64");
+    fs.writeFileSync(outPutPath, result);
     CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功写出资源...';
 
     // 删除 temp 目录

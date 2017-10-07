@@ -31,14 +31,9 @@ var onTick = function (event) {
         createjs.Ticker.removeAllEventListeners();
         timeline.resetOrders();
         let writer = new SVGAWriter(timeline);
-        writer.createZIPPackage((blob) => {
+        writer.createBinaryPackage((blob) => {
             if (window.cep !== undefined) {
-                var reader = new window.FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = function () {
-                    base64data = reader.result;
-                    window.top.saveAs(base64data.replace("data:application/zip;base64,", ""))
-                }
+                window.top.saveAs(blob)
             }
             onConverted(blob);
         });

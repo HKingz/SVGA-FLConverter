@@ -1,4 +1,5 @@
 import SVGAResourceHelper from './SVGAResourceHelper'
+import { deflateSync } from 'zlib'
 
 module.exports = class SVGAWriter {
 
@@ -7,6 +8,32 @@ module.exports = class SVGAWriter {
 
     constructor(timeline) {
         this.timeline = timeline;
+    }
+
+    createBinaryPackage(callback) {
+        let fileMapping = {};
+        let resourceHelper = new SVGAResourceHelper(this.timeline._resources);
+        resourceHelper.copyToBinary(fileMapping, (result) => {
+            this.resources = result;
+
+            let spec = this.createSpec();
+
+            alert(fileMapping + spec);
+
+            const stream = new Buffer(SVGAProtoHelper_2_0_0.convertToProto(spec, fileMapping));
+            const blob = deflateSync(stream);
+
+            callback(blob);
+            // document.querySelector('.downloadButton').onclick = () => {
+            //     if (window.cep !== undefined) {}
+            //     else if (navigator.userAgent.indexOf("Chrome") < 0) {
+            //         alert("请复制 URL， 然后使用 Chrome 浏览器打开此页面");
+            //     }
+            //     else {
+            //         saveAs(blob, document.title + "_" + (new Date()).toLocaleDateString() + ".svga");
+            //     }
+            // }
+        });
     }
 
     createZIPPackage(callback) {
