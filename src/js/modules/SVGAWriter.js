@@ -1,5 +1,5 @@
 import SVGAResourceHelper from './SVGAResourceHelper'
-import { deflateSync } from 'zlib'
+const zlib = require('zlib');
 
 module.exports = class SVGAWriter {
 
@@ -18,19 +18,25 @@ module.exports = class SVGAWriter {
 
             let spec = this.createSpec();
 
-            alert(fileMapping + spec);
-
             const stream = new Buffer(SVGAProtoHelper_2_0_0.convertToProto(spec, fileMapping));
-            const blob = deflateSync(stream);
+            const data = zlib.deflate(stream);
 
-            callback(blob);
+            // let spec = this.createSpec();;
+            // let specBuf = new Buffer(SVGAProtoHelper_1_5_0.convertToProto(spec));
+
+            // const sample = JSON.parse(fs.readFileSync('./tests/2.0.0/movie.spec', { encoding: "utf-8" }));
+            // const stream = new Buffer(SVGAProtoHelper_2_0_0.convertToProto(sample, fileMapping));
+            // fs.writeFileSync("./tests/2.0.0/rose.svga", zlib.deflateSync(stream))
+
+
+            callback(stream);
             // document.querySelector('.downloadButton').onclick = () => {
             //     if (window.cep !== undefined) {}
             //     else if (navigator.userAgent.indexOf("Chrome") < 0) {
             //         alert("请复制 URL， 然后使用 Chrome 浏览器打开此页面");
             //     }
             //     else {
-            //         saveAs(blob, document.title + "_" + (new Date()).toLocaleDateString() + ".svga");
+            //         saveAs(data, document.title + "_" + (new Date()).toLocaleDateString() + ".svga");
             //     }
             // }
         });
