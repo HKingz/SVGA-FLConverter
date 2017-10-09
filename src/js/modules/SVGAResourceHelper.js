@@ -27,7 +27,7 @@ module.exports = class SVGAResourceHelper {
                     var reader = new window.FileReader();
                     reader.readAsArrayBuffer(xhr.response);
                     reader.onloadend = function () {
-                        fileMapping[zipFilename] = reader.result;
+                        fileMapping[imageKey] = reader.result;
 
                         imageLoaded++;
                         result[imageKey] = imageKey;

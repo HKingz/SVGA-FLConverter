@@ -1,5 +1,4 @@
 import SVGAResourceHelper from './SVGAResourceHelper'
-const zlib = require('zlib');
 
 module.exports = class SVGAWriter {
 
@@ -18,9 +17,7 @@ module.exports = class SVGAWriter {
 
             let spec = this.createSpec();
 
-            const stream = new Buffer(SVGAProtoHelper_2_0_0.convertToProto(spec, fileMapping));
-            const data = zlib.deflate(stream);
-
+            const stream = SVGAProtoHelper_2_0_0.convertToProto(spec, fileMapping);
             // let spec = this.createSpec();;
             // let specBuf = new Buffer(SVGAProtoHelper_1_5_0.convertToProto(spec));
 

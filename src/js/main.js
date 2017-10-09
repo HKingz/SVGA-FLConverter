@@ -35,7 +35,7 @@ var onTick = function (event) {
             if (window.cep !== undefined) {
                 window.top.saveAs(blob)
             }
-            onConverted(blob);
+            // onConverted(blob);
         });
     }
     window.top.LoadingPercent(parseInt(currentFrame / totalFrames * 100))
@@ -44,7 +44,7 @@ var onTick = function (event) {
 
 var onConverted = function (blob) {
     var reader = new window.FileReader();
-    reader.readAsDataURL(blob);
+    // reader.readAsDataURL(blob);
     reader.onloadend = function () {
         base64data = reader.result;
         document.querySelector('#canvas').style.opacity = 1.0;
