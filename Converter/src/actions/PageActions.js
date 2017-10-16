@@ -20,6 +20,7 @@ var CURRENT_SOURCT_SUFFIX = '';
 var TEMP_SOURCE_PATH = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), '_WORKINGTEMP_');
 var CURRENT_PROJECT_PATH = csInterface.getSystemPath(SystemPath.APPLICATION);
 var USEFFULPORT;
+var CURRENT_OUTPUT_VERSION = "2.0";
 
 var CONSULEMESSAGE = '请先打开资源文件...';
 
@@ -77,9 +78,17 @@ function selectPath() {
 
                 var startConvertBtn = document.getElementById("startConvertBtn");
                 startConvertBtn.disabled = false;
+                var dropDownBtn = document.getElementById("dropDownBtn");
+                dropDownBtn.disabled = false;
             }
         }
     });
+}
+
+function openMenu() {
+    
+    document.getElementById("dropGroupDiv").className = document.getElementById("dropGroupDiv").className == "col-md-5 btn-group" ? "col-md-5 btn-group open" : "col-md-5 btn-group";
+
 }
 
 function startConvert() {
@@ -93,6 +102,8 @@ function startConvert() {
         copySourceToTempFolder(function () {
             var startConvertBtn = document.getElementById("startConvertBtn");
             startConvertBtn.disabled = true;
+            var dropDownBtn = document.getElementById("dropDownBtn");
+            dropDownBtn.disabled = true;
 
             csInterface.evalScript("startConvert('" + getAbsoluURIForPath(TEMP_SOURCE_PATH) + '_and_' + getAbsoluURIForPath(nodePath.join(CURRENT_PROJECT_PATH, 'src', 'assets') + nodePath.sep) + '_and_' + getAbsoluURIForPath(nodePath.join(TEMP_SOURCE_PATH, 'tempConvertedFile_Canvas.fla')) + "');", function () {
                 CONSULEMESSAGE = CONSULEMESSAGE + '\\n 发布成功...';
@@ -105,6 +116,11 @@ function startConvert() {
                     if(htmlString.indexOf("})(createjs = createjs||{}, AdobeAn = AdobeAn||{});") > 0 ) {
 
                         htmlString = htmlString.replace("})(createjs = createjs||{}, AdobeAn = AdobeAn||{});", "window.lib = lib; window.ss=ss; window.img=img;})(createjs = createjs||{}, AdobeAn = AdobeAn||{});");
+                    }
+
+                    if(htmlString.indexOf("var lib={};var ss={};var img={};") > 0 ) {
+
+                        htmlString = htmlString.replace("var lib={};var ss={};var img={};", "var lib={};var ss={};var img={};window.currentVersion=\"" + CURRENT_OUTPUT_VERSION + "\"");
                     }
 
                     fs.writeFile(htmlPath, htmlString, function (err) {
@@ -284,6 +300,12 @@ function convertFail() {
 
     updateiFrame();
 
+}
+
+function changeToVersion(version){
+    CURRENT_OUTPUT_VERSION = version;
+    var startConvertBtn = document.getElementById("startConvertBtn");
+    startConvertBtn.innerHTML = "开始转换 - " + version;
 }
 
 function selectFile() {

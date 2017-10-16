@@ -15,11 +15,14 @@ module.exports = class SVGAWriter {
         resourceHelper.copyToZIP(zip, (result) => {
             this.resources = result;
             let spec = this.createSpec();;
-            let specBuf = new Buffer(SVGAProtoHelper_1_5_0.convertToProto(spec));
-
+            
             this.resources = result;
             zip.file("movie.spec", JSON.stringify(spec));            
-            zip.file("movie.binary", specBuf);
+
+            if(window.currentVersion == "1.5"){
+                let specBuf = new Buffer(SVGAProtoHelper_1_5_0.convertToProto(spec));
+                zip.file("movie.binary", specBuf);
+            }
             
             zip.generateAsync({ type: "blob", compression: "DEFLATE" }).then((blob) => {
                 callback(blob);

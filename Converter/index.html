@@ -18,25 +18,63 @@
 
 <style>
 
-    body{
-        background-color: #474747;
-    }
+body{
+    background-color: #474747;
+}
 
-    .container{
-        margin-left: 20px;
-    }
+.container{
+    margin-left: 20px;
+}
 
-    .clearfix{
-        margin-top: 4%;
-    }
+.clearfix{
+    margin-top: 4%;
+}
 
-    .col-md-4{
-        float: left;
-    }
+.col-md-4{
+    float: left;
+}
 
-    .progressBarDiv{
-        margin-top: 24px;
-    }
+.col-md-5{
+    float: left;
+    position:relative;
+    min-height:1px;
+    padding-right:15px;
+    padding-left:15px
+}
+
+.progressBarDiv{
+    margin-top: 24px;
+}
+
+.dropDownItem{
+    margin-left: 24px;
+}
+
+#startConvertBtn{
+    float: left;
+    width: 110px;
+
+}
+
+#dropDownBtn{
+    float: left;
+    height: 34px;
+    margin-left: 1px;
+}
+
+#dropGroupDiv{
+    
+}
+
+#selectFile{
+    margin-left: 6px;
+}
+
+#dropDownMenu{
+    text-align: left;
+    left: 12 !important;
+    width: 140px;
+}
 
 </style>
 
@@ -45,36 +83,50 @@
 <iframe id="ConverterFrame" src="#" width="0" height="0" style="display: none"></iframe>
 
 <div class="container">
-
-    <div class="row clearfix">
-
-        <div class="col-md-4 column">
-            <button type="button" class="btn btn-default btn-block btn-success" id="selectPathBtn" onclick="selectPath()">输出路径</button>
+    
+        <div class="row clearfix">
+    
+            <div class="col-md-4 column">
+                <button type="button" class="btn btn-default btn-block btn-success" id="selectPathBtn" onclick="selectPath()">输出路径</button>
+            </div>
+            <div id="dropGroupDiv" class="col-md-5 btn-group">
+                <button type="button" class="btn btn-default btn-block btn-success" id="startConvertBtn" disabled onclick="startConvert()">开始转换 - 2.0</button>
+                <button data-toggle="dropdown" class="btn dropdown-toggle btn-success" id="dropDownBtn" disabled onclick="openMenu()"><span class="caret"></span></button>
+                <ul id="dropDownMenu" class="dropdown-menu">
+                    <li>
+                        <a class="dropDownItem" href="javascript:void(0)" onclick="changeToVersion('1.0')">SVGA - 1.0</a>
+                    </li>
+                    <li>
+                        <a class="dropDownItem" href="javascript:void(0)" onclick="changeToVersion('1.5')">SVGA - 1.5</a>
+                    </li>
+                    <li>
+                        <a class="dropDownItem" href="javascript:void(0)" onclick="changeToVersion('2.0')">SVGA - 2.0</a>
+                    </li>
+                </ul>
+            </div>
+    
+            <div class="col-md-4 column">
+                <button type="button" class="btn btn-default btn-block btn-success" id="selectFile" onclick="selectFile()">选择播放文件</button>
+            </div>
+    
         </div>
-        <div class="col-md-4 column">
-            <button type="button" class="btn btn-default btn-block btn-success" id="startConvertBtn" disabled onclick="startConvert()">开始转换</button>
+    
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+    
+                <canvas id="canvas" width="400" height="400" style="background-color: #333333"></canvas>
+    
+            </div>
         </div>
-
-        <div class="col-md-4 column">
-            <sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sub>
-        </div>
-
-        <div class="col-md-4 column">
-            <button type="button" class="btn btn-default btn-block btn-success" id="selectFile" onclick="selectFile()">选择播放文件</button>
-        </div>
-
+        <div class="box" id="box"></div>
     </div>
-
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-
-            <canvas id="canvas" width="400" height="400" style="background-color: #333333"></canvas>
-
-        </div>
-    </div>
-</div>
 
 <script type="text/javascript">
+    document.onclick=function(e){
+        if (e.target.id != "dropDownBtn"){
+            document.getElementById("dropGroupDiv").className = "col-md-5 btn-group";
+        }
+    }
 
     function downloadFile(uri,filename,callback){
         var stream = fs.createWriteStream(filename);
