@@ -1,5 +1,6 @@
 var csInterface = new CSInterface();
 var fs = require('fs');
+var zlib = require("zlib");
 var nodePath = require("path");
 var spawn = require("child_process");
 var request = require('request');
@@ -268,7 +269,13 @@ function saveAs(result) {
     converteriFrame.setAttribute('src', '#');
 
     // 将文件写入本地
-    window.cep.fs.writeFile (outPutPath, result, "Base64");
+    if(CURRENT_OUTPUT_VERSION == "2.0"){
+        const stream = new Buffer(result);
+        fs.writeFileSync(outPutPath, zlib.deflateSync(stream))
+    }else{
+        window.cep.fs.writeFile (outPutPath, result, "Base64");
+    }
+    
     CONSULEMESSAGE = CONSULEMESSAGE + '\\n 成功写出资源...';
 
     // 删除 temp 目录

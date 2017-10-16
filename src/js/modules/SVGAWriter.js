@@ -9,6 +9,36 @@ module.exports = class SVGAWriter {
         this.timeline = timeline;
     }
 
+    createBinaryPackage(callback) {
+        let fileMapping = {};
+        let resourceHelper = new SVGAResourceHelper(this.timeline._resources);
+        resourceHelper.copyToBinary(fileMapping, (result) => {
+            this.resources = result;
+
+            let spec = this.createSpec();
+
+            const stream = SVGAProtoHelper_2_0_0.convertToProto(spec, fileMapping);
+            // let spec = this.createSpec();;
+            // let specBuf = new Buffer(SVGAProtoHelper_1_5_0.convertToProto(spec));
+
+            // const sample = JSON.parse(fs.readFileSync('./tests/2.0.0/movie.spec', { encoding: "utf-8" }));
+            // const stream = new Buffer(SVGAProtoHelper_2_0_0.convertToProto(sample, fileMapping));
+            // fs.writeFileSync("./tests/2.0.0/rose.svga", zlib.deflateSync(stream))
+
+
+            callback(stream);
+            // document.querySelector('.downloadButton').onclick = () => {
+            //     if (window.cep !== undefined) {}
+            //     else if (navigator.userAgent.indexOf("Chrome") < 0) {
+            //         alert("请复制 URL， 然后使用 Chrome 浏览器打开此页面");
+            //     }
+            //     else {
+            //         saveAs(data, document.title + "_" + (new Date()).toLocaleDateString() + ".svga");
+            //     }
+            // }
+        });
+    }
+
     createZIPPackage(callback) {
         let zip = new JSZip();
         let resourceHelper = new SVGAResourceHelper(this.timeline._resources);

@@ -31,17 +31,24 @@ var onTick = function (event) {
         createjs.Ticker.removeAllEventListeners();
         timeline.resetOrders();
         let writer = new SVGAWriter(timeline);
-        writer.createZIPPackage((blob) => {
-            if (window.cep !== undefined) {
+
+        if(window.currentVersion == "2.0"){
+            writer.createBinaryPackage((blob) => {
+                if (window.cep !== undefined) {
+                    window.top.saveAs(blob);
+                }
+                // onConverted(blob);
+            });
+        }else{
+            writer.createZIPPackage((blob) => {
                 var reader = new window.FileReader();
                 reader.readAsDataURL(blob);
                 reader.onloadend = function () {
                     base64data = reader.result;
                     window.top.saveAs(base64data.replace("data:application/zip;base64,", ""))
                 }
-            }
-            onConverted(blob);
-        });
+            });
+        }
     }
     window.top.LoadingPercent(parseInt(currentFrame / totalFrames * 100))
     document.querySelector('.downloadButton').innerHTML = "转换中：" + parseInt(currentFrame / totalFrames * 100) + "%";
@@ -49,7 +56,7 @@ var onTick = function (event) {
 
 var onConverted = function (blob) {
     var reader = new window.FileReader();
-    reader.readAsDataURL(blob);
+    // reader.readAsDataURL(blob);
     reader.onloadend = function () {
         base64data = reader.result;
         document.querySelector('#canvas').style.opacity = 1.0;

@@ -6,6 +6,41 @@ module.exports = class SVGAResourceHelper {
         this.resource = resource;
     }
 
+    copyToBinary = (fileMapping, callback) => {
+        if (Object.keys(this.resource).length == 0) {
+            callback({});
+            return;
+        }
+        let self = this;
+        let imageLoaded = 0;
+        let result = {};
+        let imgID = 0;
+        for (let imageKey in this.resource) {
+            if (this.resource.hasOwnProperty(imageKey)) {
+                imgID++;
+                let filename = this.resource[imageKey].imageKey;
+                let zipFilename = imageKey + ".png";
+                let xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                xhr.open('GET', this.resource[imageKey].dataPath, true);
+                xhr.onload = () => {
+                    var reader = new window.FileReader();
+                    reader.readAsArrayBuffer(xhr.response);
+                    reader.onloadend = function () {
+                        fileMapping[imageKey] = reader.result;
+
+                        imageLoaded++;
+                        result[imageKey] = imageKey;
+                        if (imageLoaded >= Object.keys(self.resource).length) {
+                            callback(result);
+                        }
+                    }
+                }
+                xhr.send();
+            }
+        }
+    }
+
     copyToZIP = (zip, callback) => {
         if (Object.keys(this.resource).length == 0) {
             callback({});
@@ -61,5 +96,4 @@ module.exports = class SVGAResourceHelper {
         }
         return u8arr;
     }
-
 }
