@@ -29,9 +29,15 @@ module.exports = class SVGAResourceHelper {
                     reader.onloadend = function () {
                         var base64data = reader.result;
                         var data = self.dataURLtoUint8(base64data);
-                        var compressedData = pngquant(data, { quality: "0-100", speed: "2" }, console.log)
-                        let compressedBlob = new Blob([compressedData.data.buffer]);
-                        zip.file(zipFilename, compressedBlob);
+                        if (window.cep !== undefined) {
+                            let compressedBlob = new Blob([data]);
+                            zip.file(zipFilename, compressedBlob);
+                        }
+                        else {
+                            var compressedData = pngquant(data, { quality: "0-100", speed: "2" }, console.log)
+                            let compressedBlob = new Blob([compressedData.data.buffer]);
+                            zip.file(zipFilename, compressedBlob);
+                        }
                         imageLoaded++;
                         result[imageKey] = imageKey;
                         if (imageLoaded >= Object.keys(self.resource).length) {

@@ -4,9 +4,7 @@ module.exports = class SVGAMovieEntity {
         width: 0.0,
         height: 0.0,
     }
-
     fps = 20;
-
     frameCount = 0;
 
     constructor() {

@@ -18,30 +18,64 @@ var onTick = function (event) {
     stage.handleEvent(event);
     timeline.readFrame(currentFrame);
     currentFrame++;
-    if (currentFrame >= exportRoot.totalFrames) {
+    var totalFrames = exportRoot.totalFrames;
+    if (totalFrames === 1) {
+        for (let index = 0; index < exportRoot.children.length; index++) {
+            let element = exportRoot.children[index];
+            if (element.totalFrames > 1) {
+                totalFrames = Math.max(totalFrames, element.totalFrames);
+            }
+        }
+    }
+    if (currentFrame >= totalFrames) {
         createjs.Ticker.removeAllEventListeners();
         timeline.resetOrders();
-        console.log(timeline)
         let writer = new SVGAWriter(timeline);
         writer.createZIPPackage((blob) => {
+            if (window.cep !== undefined) {
+                var reader = new window.FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function () {
+                    base64data = reader.result;
+                    window.top.saveAs(base64data.replace("data:application/zip;base64,", ""))
+                }
+            }
             onConverted(blob);
+        });
+    }
+    document.querySelector('.downloadButton').innerHTML = "转换中：" + parseInt(currentFrame / totalFrames * 100) + "%";
+}
+
+var onConverted = function (blob) {
+    var reader = new window.FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = function () {
+        base64data = reader.result;
+        document.querySelector('#canvas').style.opacity = 1.0;
+        document.querySelector('.downloadButton').innerHTML = "下载 SVGA 文件";
+        var player = new Svga.Player('#canvas');
+        var parser = new Svga.Parser();
+        parser.load(base64data.replace("data:application/zip;base64,", "data:image/svga;base64,"), function (videoItem) {
+            player.setVideoItem(videoItem);
+            player.startAnimation();
         });
     }
 }
 
-var onConverted = function (blob) {
-    document.querySelector('#canvas').style.opacity = 1.0;
-    document.querySelector('.downloadButton').innerHTML = "下载 SVGA 文件";
-    var player = new Svga.Player('#canvas');
-    var parser = new Svga.Parser();
-    parser.load(new File([blob], 'output.svga'), function (videoItem) {
-        player.setVideoItem(videoItem);
-        player.startAnimation();
-    });
-}
-
 handleComplete = function (event) {
     originalHandleComplete(event);
+    // if (60 % lib.properties.fps > 0) {
+    //     alert("FPS 只能是 60 的约数，如 [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]，当前 FPS = " + lib.properties.fps + "，请修改后再执行导出操作。");
+    //     document.querySelector('#canvas').style.opacity = 0.0;
+    //     document.querySelector('.downloadButton').innerHTML = "转换失败";
+    //     throw new Error("FPS 只能是 60 的约数，如 [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]，当前 FPS = " + lib.properties.fps + "，请修改后再执行导出操作。");
+    // }
+    if (!window.location.href.startsWith("http://")) {
+        alert("请在 Flash 软件中，按 ctrl + enter 或 command + return 进行导出操作。");
+        document.querySelector('#canvas').style.opacity = 0.0;
+        document.querySelector('.downloadButton').innerHTML = "转换失败";
+        throw new Error("请在 Flash 软件中，按 ctrl + enter 或 command + return 进行导出操作。");
+    }
     createjs.Ticker.removeAllEventListeners();
     timeline = new SVGATimeline();
     createjs.Ticker.addEventListener("tick", onTick);

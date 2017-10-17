@@ -16,6 +16,7 @@ module.exports = class SVGATimeline {
     }
 
     readFrame = (idx) => {
+        this._movie.frameCount = idx + 1;
         this._orderCurrent = 0;
         let layerFrames = this.findLayerFrames(stage);
         this._frames.push(layerFrames);
