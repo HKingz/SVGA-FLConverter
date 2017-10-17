@@ -43,6 +43,7 @@ var onTick = function (event) {
             onConverted(blob);
         });
     }
+    window.top.LoadingPercent(parseInt(currentFrame / totalFrames * 100))
     document.querySelector('.downloadButton').innerHTML = "转换中：" + parseInt(currentFrame / totalFrames * 100) + "%";
 }
 
@@ -62,14 +63,14 @@ var onConverted = function (blob) {
     }
 }
 
-handleComplete = function (event) {
-    originalHandleComplete(event);
-    // if (60 % lib.properties.fps > 0) {
-    //     alert("FPS 只能是 60 的约数，如 [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]，当前 FPS = " + lib.properties.fps + "，请修改后再执行导出操作。");
-    //     document.querySelector('#canvas').style.opacity = 0.0;
-    //     document.querySelector('.downloadButton').innerHTML = "转换失败";
-    //     throw new Error("FPS 只能是 60 的约数，如 [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]，当前 FPS = " + lib.properties.fps + "，请修改后再执行导出操作。");
-    // }
+handleComplete = function (event, comp) {
+    originalHandleComplete(event, comp);
+    if (60 % lib.properties.fps > 0) {
+        alert("FPS 只能是 60 的约数，如 [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]，当前 FPS = " + lib.properties.fps + "，请修改后再执行导出操作。");
+        document.querySelector('#canvas').style.opacity = 0.0;
+        document.querySelector('.downloadButton').innerHTML = "转换失败";
+        throw new Error("FPS 只能是 60 的约数，如 [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]，当前 FPS = " + lib.properties.fps + "，请修改后再执行导出操作。");
+    }
     if (!window.location.href.startsWith("http://")) {
         alert("请在 Flash 软件中，按 ctrl + enter 或 command + return 进行导出操作。");
         document.querySelector('#canvas').style.opacity = 0.0;
