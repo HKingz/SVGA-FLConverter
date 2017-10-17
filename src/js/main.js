@@ -37,13 +37,13 @@ var onTick = function (event) {
                 reader.readAsDataURL(blob);
                 reader.onloadend = function () {
                     base64data = reader.result;
-                    window.top.saveAs(base64data.replace("data:application/zip;base64,", ""))
+                    window.top && window.top.saveAs(base64data.replace("data:application/zip;base64,", ""))
                 }
             }
             onConverted(blob);
         });
     }
-    window.top.LoadingPercent(parseInt(currentFrame / totalFrames * 100))
+    window.top && window.top.LoadingPercent && window.top.LoadingPercent(parseInt(currentFrame / totalFrames * 100))
     document.querySelector('.downloadButton').innerHTML = "转换中：" + parseInt(currentFrame / totalFrames * 100) + "%";
 }
 
