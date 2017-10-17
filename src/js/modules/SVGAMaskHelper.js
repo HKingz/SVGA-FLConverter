@@ -21,6 +21,7 @@ module.exports = class SVGAMaskHelper {
         let scaleY = this.layer.scaleY;
         let regX = this.layer.regX;
         let regY = this.layer.regY;
+        let rotation = this.layer.rotation;
         let parents = []
         let currentLayer = this.layer.parent;
         while (currentLayer != null && currentLayer != undefined) {
@@ -35,9 +36,9 @@ module.exports = class SVGAMaskHelper {
             scaleY *= element.scaleY;
             regX += element.regX;
             regY += element.regY;
+            rotation += element.rotation;
             if (element.mask != null && element.mask != undefined) {
-                d += (new SVGAPathHelper(element.mask.graphics)).requestPath({ x: -(offsetX - element.mask.x), y: -(offsetY - element.mask.y) }, {x: 1.0 / scaleX, y: 1.0 / scaleY}, {x: regX, y: regY});
-                window.aaa = element.mask;
+                d += (new SVGAPathHelper(element.mask.graphics)).requestPath({ x: -(offsetX - element.mask.x), y: -(offsetY - element.mask.y) }, { x: 1.0 / scaleX, y: 1.0 / scaleY }, { x: regX, y: regY }, -(rotation - element.mask.rotation));
                 hasMask = true;
                 break;
             }
