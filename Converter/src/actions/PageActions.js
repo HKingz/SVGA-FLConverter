@@ -1,8 +1,8 @@
 var csInterface = new CSInterface();
 var fs = require('fs');
-var zlib = require("zlib");
-var nodePath = require("path");
-var spawn = require("child_process");
+var nodePath = require('path');
+var zlib = require('zlib');
+var spawn = require('child_process');
 var request = require('request');
 var portfinder = require('portfinder');
 
@@ -306,7 +306,6 @@ function LoadingPercent(percentage) {
 function convertFail() {
 
     updateiFrame();
-
 }
 
 function changeToVersion(version){
@@ -329,43 +328,13 @@ function selectFile() {
 }
 
 function preview(filePath) {
-
-    var fileName = filePath.toString()
-
-    var file = window.cep.fs.readFile(fileName, "Base64");
-
-    parser.load("data:image/svga;base64," + file.data, function (videoItem) {
-
-        previewWithVideoItems(videoItem);
-
+    
+    var fileName = filePath;
+    
+    parser.load(fileName, function (videoItem) {
+        player.setVideoItem(videoItem);
+        player.startAnimation()
     });
-}
-
-function previewWithVideoItems(videoItem) {
-    var scale = 1;
-    var moveX = 0;
-    var moveY = 0;
-
-    if (videoItem.videoSize.width <= 400 && videoItem.videoSize.height <= 400){
-
-
-    }else{
-
-        if (videoItem.videoSize.width > videoItem.videoSize.height){
-
-            moveY = (400 - (videoItem.videoSize.height / videoItem.videoSize.width) * 400) / 2;
-
-        }else{
-
-            scale = (videoItem.videoSize.width / videoItem.videoSize.height);
-            moveX = ((400 - 400 * scale)) / 2;
-        }
-    }
-
-    player.setVideoItem(videoItem);
-    player._stageLayer.setTransform(moveX, moveY, scale, scale);
-
-    player.startAnimation();
 }
 
 function pngquantImage(inImgPath, outImgPath, isLastImage, callback) {
