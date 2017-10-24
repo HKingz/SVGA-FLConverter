@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
+
 <head>
     <meta http-equiv="content-type" content="text/html" charset="UTF-8">
 
@@ -17,81 +18,79 @@
 </head>
 
 <style>
+    body {
+        background-color: #474747;
+    }
 
-body{
-    background-color: #474747;
-}
+    .container {
+        margin-left: 20px;
+    }
 
-.container{
-    margin-left: 20px;
-}
+    .clearfix {
+        margin-top: 4%;
+    }
 
-.clearfix{
-    margin-top: 4%;
-}
+    .col-md-4 {
+        float: left;
+    }
 
-.col-md-4{
-    float: left;
-}
+    .col-md-5 {
+        float: left;
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px
+    }
 
-.col-md-5{
-    float: left;
-    position:relative;
-    min-height:1px;
-    padding-right:15px;
-    padding-left:15px
-}
+    .progressBarDiv {
+        margin-top: 24px;
+    }
 
-.progressBarDiv{
-    margin-top: 24px;
-}
+    .dropDownItem {
+        margin-left: 24px;
+    }
 
-.dropDownItem{
-    margin-left: 24px;
-}
+    #startConvertBtn {
+        float: left;
+        width: 110px;
 
-#startConvertBtn{
-    float: left;
-    width: 110px;
+    }
 
-}
+    #dropDownBtn {
+        float: left;
+        height: 34px;
+        margin-left: 1px;
+    }
 
-#dropDownBtn{
-    float: left;
-    height: 34px;
-    margin-left: 1px;
-}
+    #dropGroupDiv {}
 
-#dropGroupDiv{
-    
-}
+    #selectFile {
+        margin-left: 6px;
+    }
 
-#selectFile{
-    margin-left: 6px;
-}
-
-#dropDownMenu{
-    text-align: left;
-    left: 12 !important;
-    width: 140px;
-}
-
+    #dropDownMenu {
+        text-align: left;
+        left: 12 !important;
+        width: 140px;
+    }
 </style>
 
 <body>
 
-<iframe id="ConverterFrame" src="#" width="0" height="0" style="display: none"></iframe>
+    <iframe id="ConverterFrame" src="#" width="0" height="0" style="display: none"></iframe>
 
-<div class="container">
-    
+    <div class="container">
+
         <div class="row clearfix">
-    
+
             <div class="col-md-4 column">
                 <button type="button" class="btn btn-default btn-block btn-success" id="selectPathBtn" onclick="selectPath()">输出路径</button>
             </div>
             <div id="dropGroupDiv" class="col-md-5 btn-group">
                 <button type="button" class="btn btn-default btn-block btn-success" id="startConvertBtn" disabled onclick="startConvert()">开始转换 - 2.0</button>
-                <button data-toggle="dropdown" class="btn dropdown-toggle btn-success" id="dropDownBtn" disabled onclick="openMenu()"><span class="caret"></span></button>
+                <button data-toggle="dropdown" class="btn dropdown-toggle btn-success" id="dropDownBtn" disabled onclick="openMenu()">
+                    <span class="caret"></span>
+                </button>
                 <ul id="dropDownMenu" class="dropdown-menu">
                     <li>
                         <a class="dropDownItem" href="javascript:void(0)" onclick="changeToVersion('1.0')">SVGA - 1.0</a>
@@ -104,126 +103,122 @@ body{
                     </li>
                 </ul>
             </div>
-    
+
             <div class="col-md-4 column">
                 <button type="button" class="btn btn-default btn-block btn-success" id="selectFile" onclick="selectFile()">选择播放文件</button>
             </div>
-    
+
         </div>
-    
+
         <div class="row clearfix">
             <div class="col-md-12 column">
-    
-                <canvas id="canvas" width="400" height="400" style="background-color: #333333"></canvas>
-    
+
+                <div id="canvas" style="background-color: #333333; width: 400px; height: 400px"></div>
+
             </div>
         </div>
         <div class="box" id="box"></div>
     </div>
 
-<script type="text/javascript">
-    document.onclick=function(e){
-        if (e.target.id != "dropDownBtn"){
-            document.getElementById("dropGroupDiv").className = "col-md-5 btn-group";
+    <script type="text/javascript">
+        document.onclick = function (e) {
+            if (e.target.id != "dropDownBtn") {
+                document.getElementById("dropGroupDiv").className = "col-md-5 btn-group";
+            }
         }
-    }
 
-    function downloadFile(uri,filename,callback){
-        var stream = fs.createWriteStream(filename);
-        request(uri).pipe(stream).on('close', callback);
-    }
+        function downloadFile(uri, filename, callback) {
+            var stream = fs.createWriteStream(filename);
+            request(uri).pipe(stream).on('close', callback);
+        }
 
-    var infoUrl = 'https://raw.githubusercontent.com/yyued/SVGA-FLConverter/master/updateInfo';
-    var infoName = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), '.updateInfo');
+        var infoUrl = 'https://raw.githubusercontent.com/yyued/SVGA-FLConverter/master/updateInfo';
+        var infoName = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), '.updateInfo');
 
-    downloadFile(infoUrl,infoName, function () {
+        downloadFile(infoUrl, infoName, function () {
 
-        var newestVersion = parseInt(fs.readFileSync(infoName,'utf-8').split('v').pop());
-        var currentVersion = parseInt(fs.readFileSync(nodePath.join(CURRENT_PROJECT_PATH, 'updateInfo'),'utf-8').split('v').pop());
-        fs.unlinkSync(infoName);
+            var newestVersion = parseInt(fs.readFileSync(infoName, 'utf-8').split('v').pop());
+            var currentVersion = parseInt(fs.readFileSync(nodePath.join(CURRENT_PROJECT_PATH, 'updateInfo'), 'utf-8').split('v').pop());
+            fs.unlinkSync(infoName);
 
-        if (currentVersion < newestVersion) {
+            if (currentVersion < newestVersion) {
 
-            confirmMessages("主人，现在有更新的版本了哦，更新一下? \\n tip: 下载过慢可以到官网下载最新版本安装哦。",function () {
+                confirmMessages("主人，现在有更新的版本了哦，更新一下? \\n tip: 下载过慢可以到官网下载最新版本安装哦。", function () {
 
-                var selectPathBtn = document.getElementById("selectPathBtn");
-                selectPathBtn.disabled = true;
-                var selectFile = document.getElementById("selectFile");
-                selectFile.disabled = true;
-                $("button#selectFile").text('正在下载更新...');
+                    var selectPathBtn = document.getElementById("selectPathBtn");
+                    selectPathBtn.disabled = true;
+                    var selectFile = document.getElementById("selectFile");
+                    selectFile.disabled = true;
+                    $("button#selectFile").text('正在下载更新...');
 
-                var zxpUrl = "https://raw.githubusercontent.com/yyued/SVGA-FLConverter/master/bin/SVGAConverter_FL.zxp";
-                var zxpFile = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), 'updateFL.zxp');
-                downloadFile(zxpUrl,zxpFile,function () {
+                    var zxpUrl = "https://raw.githubusercontent.com/yyued/SVGA-FLConverter/master/bin/SVGAConverter_FL.zxp";
+                    var zxpFile = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), 'updateFL.zxp');
+                    downloadFile(zxpUrl, zxpFile, function () {
 
-                    $("button#selectFile").text('正在安装更新...');
-                    deleteFlider(CURRENT_PROJECT_PATH, true, false ,function () {
-                        if (csInterface.getOSInformation().indexOf("Mac") >= 0) {
-                            var program = "unzip -o -d " + CURRENT_PROJECT_PATH.replace('Application ', 'Application\\ ') + " " + zxpFile;
-                            spawn.exec(program, function () {
-
-                                alertMessages("更新完成，即将重启。");
-
-                                fs.unlinkSync(zxpFile);
-                                csInterface.closeExtension()
-                            });
-                        }else{
-
-                            var zipToolUrl = "https://raw.githubusercontent.com/yyued/SVGA-FLConverter/master/zip.exe";
-                            var zipToolFile = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), 'zip.exe');
-
-                            downloadFile(zipToolUrl, zipToolFile, function () {
-
-                                var program = zipToolFile + " " + zxpFile + " -d " + "\"" + CURRENT_PROJECT_PATH + "\"";
+                        $("button#selectFile").text('正在安装更新...');
+                        deleteFlider(CURRENT_PROJECT_PATH, true, false, function () {
+                            if (csInterface.getOSInformation().indexOf("Mac") >= 0) {
+                                var program = "unzip -o -d " + CURRENT_PROJECT_PATH.replace('Application ', 'Application\\ ') + " " + zxpFile;
                                 spawn.exec(program, function () {
 
                                     alertMessages("更新完成，即将重启。");
 
                                     fs.unlinkSync(zxpFile);
-                                    fs.unlinkSync(zipToolFile);
                                     csInterface.closeExtension()
                                 });
+                            } else {
 
-                            });
-                        }
+                                var zipToolUrl = "https://raw.githubusercontent.com/yyued/SVGA-FLConverter/master/zip.exe";
+                                var zipToolFile = nodePath.join(csInterface.getSystemPath(SystemPath.MY_DOCUMENTS), 'zip.exe');
+
+                                downloadFile(zipToolUrl, zipToolFile, function () {
+
+                                    var program = zipToolFile + " " + zxpFile + " -d " + "\"" + CURRENT_PROJECT_PATH + "\"";
+                                    spawn.exec(program, function () {
+
+                                        alertMessages("更新完成，即将重启。");
+
+                                        fs.unlinkSync(zxpFile);
+                                        fs.unlinkSync(zipToolFile);
+                                        csInterface.closeExtension()
+                                    });
+
+                                });
+                            }
+                        });
                     });
+                }, function () {
                 });
-            }, function () {
-            });
-        }
-    });
-
-    parser = new SVGA.Parser();
-    
-    var loadingName = csInterface.getSystemPath(SystemPath.APPLICATION) + "/src/res/loading.svga";
-    
-    parser.load(loadingName, function (videoItem) {
-    player = new Svga.Player('#canvas');
-    
-        player.setVideoItem(videoItem);
-        player.startAnimation()
-    });
-
-    /// 右键菜单。
-    csInterface.setContextMenu(
-        '<Menu>' +
-        '<MenuItem Id="playMovie" Label="Play" Enabled="true" Checked="false" />' +
-        '<MenuItem Id="stopMovie" Label="Stop" Enabled="true" Checked="false" />' +
-        '</Menu>',
-
-        function( menu ) {
-            switch( menu ) {
-                case "playMovie"  : player.startAnimation(); break;
-                case "stopMovie"  : player.pauseAnimation(); break;
-
-                default: break;
             }
         });
-</script>
+        parser = new SVGA.Parser();
+
+        var loadingName = csInterface.getSystemPath(SystemPath.APPLICATION) + "/src/res/loading.svga";
+
+        parser.load(loadingName, function (videoItem) {
+            player = new Svga.Player('#canvas');
+
+            player.setVideoItem(videoItem);
+            player.startAnimation()
+        });
+
+        /// 右键菜单。
+        csInterface.setContextMenu(
+            '<Menu>' +
+            '<MenuItem Id="playMovie" Label="Play" Enabled="true" Checked="false" />' +
+            '<MenuItem Id="stopMovie" Label="Stop" Enabled="true" Checked="false" />' +
+            '</Menu>',
+
+            function (menu) {
+                switch (menu) {
+                    case "playMovie": player.startAnimation(); break;
+                    case "stopMovie": player.pauseAnimation(); break;
+
+                    default: break;
+                }
+            });
+    </script>
 
 </body>
+
 </html>
-
-
-
-

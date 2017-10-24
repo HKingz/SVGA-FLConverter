@@ -332,6 +332,8 @@ function preview(filePath) {
     var fileName = filePath;
     
     parser.load(fileName, function (videoItem) {
+
+        player.setContentMode("AspectFit");
         player.setVideoItem(videoItem);
         player.startAnimation()
     });
