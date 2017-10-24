@@ -30,7 +30,7 @@ Animate CC plugin for converting animations to SVGA source file.
 
 To test whether the SVGA source file is working properly：
 1. Use the button 选择播放文件 to selete the local SVGA for preview;
-2. Open http://legox.yy.com/svga/svgaplayer/, Drag a SVGA source file or select a file for preview。
+2. Open http://svga.io/svga-preview.html, Drag a SVGA source file or select a file for preview。
 
 
 ```
@@ -69,5 +69,5 @@ To test whether the SVGA source file is working properly：
 
 要测试生成文件是否可以正常使用：
 1. 使用 菜单 > 窗口 > 扩展 > SVGAConverter_FL 直接播放本地 svga 文件;
-2. 使用浏览器，打开 http://legox.yy.com/svga/svgaplayer/ ，选择或拖入 SVGA 源文件，即可预览动画效果。
+2. 使用浏览器，打开 http://svga.io/svga-preview.html ，选择或拖入 SVGA 源文件，即可预览动画效果。
 
