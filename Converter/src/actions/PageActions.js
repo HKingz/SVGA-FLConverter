@@ -114,14 +114,10 @@ function startConvert() {
                 fs.readFile(htmlPath, function (err, data) {
 
                     var htmlString = data.toString();
+                    htmlString = "<script>window.currentVersion=\"" + CURRENT_OUTPUT_VERSION + "\"</script>" + htmlString;
                     if(htmlString.indexOf("})(createjs = createjs||{}, AdobeAn = AdobeAn||{});") > 0 ) {
 
                         htmlString = htmlString.replace("})(createjs = createjs||{}, AdobeAn = AdobeAn||{});", "window.lib = lib; window.ss=ss; window.img=img;})(createjs = createjs||{}, AdobeAn = AdobeAn||{});");
-                    }
-
-                    if(htmlString.indexOf("var lib={};var ss={};var img={};") > 0 ) {
-
-                        htmlString = htmlString.replace("var lib={};var ss={};var img={};", "var lib={};var ss={};var img={};window.currentVersion=\"" + CURRENT_OUTPUT_VERSION + "\"");
                     }
 
                     fs.writeFile(htmlPath, htmlString, function (err) {
@@ -332,8 +328,10 @@ function preview(filePath) {
     var fileName = filePath;
     
     parser.load(fileName, function (videoItem) {
-
+        
         player.setContentMode("AspectFit");
+        player.setClipsToBounds(true);
+
         player.setVideoItem(videoItem);
         player.startAnimation()
     });
