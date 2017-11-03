@@ -43,6 +43,10 @@ module.exports = class SVGAShapeHelper {
         if (typeof stringValue != "string") {
             return [0.0, 0.0, 0.0, 1.0];
         }
+        if (stringValue.indexOf("rgba(") >= 0){
+            return stringValue.replace('rgba(', '').replace(')', '').split(',');
+        }
+
         let sValue = stringValue.replace('#', '');
         if (sValue.length == 6) {
             let rStr = sValue.substr(0, 2)
