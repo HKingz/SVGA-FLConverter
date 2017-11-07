@@ -9,7 +9,7 @@ var confirmMessage = function (message) {
 var getActiveInfo = function () {
 
     var doc = fl.getDocumentDOM();
-    if ( !doc ) {
+    if (!doc) {
         return null;
     }
 
@@ -34,6 +34,8 @@ var startConvert = function (paths) {
 
     var fileURI;
 
+    var legalFPS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60];
+
     for (fileURI in files) {
         fl.trace(fileURI = inFolder + '/' + files[fileURI]);
 
@@ -48,8 +50,19 @@ var startConvert = function (paths) {
             doc = fl.getDocumentDOM();
         }
 
+        if (doc.frameRate < 60 && (60 % doc.frameRate) != 0) {
+            for (var j = 1; j < legalFPS.length; j++) {
+                if (legalFPS[j] > doc.frameRate) {
+                    if (Math.abs(legalFPS[j - 1] - doc.frameRate) > Math.abs(legalFPS[j]) - doc.frameRate) {
+                        doc.frameRate = legalFPS[j];
+                    } else {
+                        doc.frameRate = legalFPS[j - 1];
+                    }
+                    break;
+                }
+            }
+        }
         doc.importPublishProfile(asssetURI + 'SVGA-FLConveter.apr');
-
         doc.publish();
         doc.close(false);
     }
