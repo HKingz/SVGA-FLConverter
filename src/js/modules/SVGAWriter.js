@@ -12,20 +12,20 @@ module.exports = class SVGAWriter {
     createBinaryPackage(callback) {
         let fileMapping = {};
         let resourceHelper = new SVGAResourceHelper(this.timeline._resources);
-        resourceHelper.copyToBinary(fileMapping, (result) => {
+        resourceHelper.copyToBinary(fileMapping, (result, storageCounter) => {
             this.resources = result;
 
             let spec = this.createSpec();
 
             const stream = SVGAProtoHelper_2_0_0.convertToProto(spec, fileMapping);
-            callback(stream);
+            callback(stream, storageCounter);
         });
     }
 
     createZIPPackage(callback) {
         let zip = new JSZip();
         let resourceHelper = new SVGAResourceHelper(this.timeline._resources);
-        resourceHelper.copyToZIP(zip, (result) => {
+        resourceHelper.copyToZIP(zip, (result, storageCounter) => {
             this.resources = result;
             let spec = this.createSpec();;
             
@@ -38,7 +38,7 @@ module.exports = class SVGAWriter {
             }
             
             zip.generateAsync({ type: "blob", compression: "DEFLATE" }).then((blob) => {
-                callback(blob);
+                callback(blob, storageCounter);
                 document.querySelector('.downloadButton').onclick = () => {
                     if (window.cep !== undefined) {}
                     else if (navigator.userAgent.indexOf("Chrome") < 0) {

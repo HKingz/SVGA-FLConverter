@@ -135,11 +135,11 @@ function startConvert() {
                                     var isLastImage = index == (files.length - 1);
 
                                     pngquantImage(imgPath, outImgPath, isLastImage, function () {
-                                        setTimeout("createHTTPServer()", 500);
+                                        setTimeout(createHTTPServer(), 500);
                                     });
                                 });
                             }else {
-                                setTimeout("createHTTPServer()", 500);
+                                setTimeout(createHTTPServer(), 500);
                             }
                         });
                     });
@@ -256,7 +256,7 @@ window.onunload = function()
 }
 
 // 转换完成回调
-function saveAs(result) {
+function saveAs(result, storageCounter) {
     CONSULEMESSAGE = CONSULEMESSAGE + '\\n 转换完成...';
 
     // 完成转换后关闭服务器
@@ -277,6 +277,14 @@ function saveAs(result) {
     // 删除 temp 目录
     deleteFlider(TEMP_SOURCE_PATH, true, true, function () {});
 
+    if(storageCounter == undefined || storageCounter == "undefined"){
+        document.getElementById('storageCounter').innerHTML = "内存占用：0 M";
+    }else{
+        document.getElementById('storageCounter').innerHTML = "内存占用：" + Math.round((storageCounter/1048576)*100)/100 + " M";
+        if(storageCounter > 8388608){
+            alertMessages("内存占用超过8M，可能导致目标应用崩溃！");
+        }
+    }
     preview(outPutPath);
     CONSULEMESSAGE = CONSULEMESSAGE + '\\n 开始播放...';
     outPutPath = undefined;

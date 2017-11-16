@@ -11,6 +11,7 @@ module.exports = class SVGAResourceHelper {
             callback({});
             return;
         }
+        let storageCounter = 0;
         let self = this;
         let imageLoaded = 0;
         let result = {};
@@ -28,11 +29,16 @@ module.exports = class SVGAResourceHelper {
                     reader.readAsArrayBuffer(xhr.response);
                     reader.onloadend = function () {
                         fileMapping[imageKey] = reader.result;
-
                         imageLoaded++;
                         result[imageKey] = imageKey;
+
+                        var data = new Uint8Array(reader.result);
+                        var width = data[18]*256+data[19];
+                        var height = data[22]*256+data[23];
+                        storageCounter += (width*height*4);
+
                         if (imageLoaded >= Object.keys(self.resource).length) {
-                            callback(result);
+                            callback(result, storageCounter);
                         }
                     }
                 }
@@ -46,6 +52,7 @@ module.exports = class SVGAResourceHelper {
             callback({});
             return;
         }
+        let storageCounter = 0;
         let self = this;
         let imageLoaded = 0;
         let result = {};
@@ -64,6 +71,11 @@ module.exports = class SVGAResourceHelper {
                     reader.onloadend = function () {
                         var base64data = reader.result;
                         var data = self.dataURLtoUint8(base64data);
+
+                        var width = data[18]*256+data[19];
+                        var height = data[22]*256+data[23];
+                        storageCounter += (width*height*4);
+
                         if (window.cep !== undefined) {
                             let compressedBlob = new Blob([data]);
                             zip.file(zipFilename, compressedBlob);
@@ -76,7 +88,7 @@ module.exports = class SVGAResourceHelper {
                         imageLoaded++;
                         result[imageKey] = imageKey;
                         if (imageLoaded >= Object.keys(self.resource).length) {
-                            callback(result);
+                            callback(result, storageCounter);
                         }
                     }
                 }

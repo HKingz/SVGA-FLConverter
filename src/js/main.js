@@ -33,19 +33,19 @@ var onTick = function (event) {
         let writer = new SVGAWriter(timeline);
 
         if(window.currentVersion == "2.0"){
-            writer.createBinaryPackage((blob) => {
+            writer.createBinaryPackage((blob, storageCounter) => {
                 if (window.cep !== undefined) {
-                    window.top.saveAs(blob);
+                    window.top.saveAs(blob, storageCounter);
                 }
                 // onConverted(blob);
             });
         }else{
-            writer.createZIPPackage((blob) => {
+            writer.createZIPPackage((blob, storageCounter) => {
                 var reader = new window.FileReader();
                 reader.readAsDataURL(blob);
                 reader.onloadend = function () {
                     base64data = reader.result;
-                    window.top && window.top.saveAs(base64data.replace("data:application/zip;base64,", ""))
+                    window.top && window.top.saveAs(base64data.replace("data:application/zip;base64,", ""), storageCounter)
                 }
             });
         }

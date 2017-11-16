@@ -48,6 +48,8 @@ var startConvert = function (paths) {
 
             doc.close(false);
             doc = fl.getDocumentDOM();
+        }else{
+            fl.runScript(asssetURI + 'CherkForPureColorVectorgraph.jsfl', 'CherkForPureColorVectorgraph');            
         }
 
         if (doc.frameRate < 60 && (60 % doc.frameRate) != 0) {
